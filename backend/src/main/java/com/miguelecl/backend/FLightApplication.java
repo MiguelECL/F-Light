@@ -9,5 +9,4 @@ public class FLightApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(FLightApplication.class, args);
 	}
-
 }
