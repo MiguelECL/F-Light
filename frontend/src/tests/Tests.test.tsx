@@ -8,7 +8,7 @@ import React from 'react'
 
 const RenderTest = (Page:React.ReactNode) => {
     test("Renders Page", () => {
-        render(Page)
+        render(Page);
     });
 }
 
@@ -18,6 +18,7 @@ describe("Test App EntryPoint", () => {
     test("NavBar in DOM", () => {
         expect(screen.getByText("About")).toBeCalled();
     });
+    screen.debug();
 });
 
 describe("Test Search Page", () => {

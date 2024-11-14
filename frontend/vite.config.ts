@@ -21,7 +21,7 @@ export default defineConfig({
   test:{
     environment: "jsdom",
     coverage:{
-      reporter:["text"]
+      reporter:["text", "html"]
     }
   }
 })

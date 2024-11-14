@@ -1,10 +1,7 @@
 package com.miguelecl.backend.service;
-import jdk.jfr.ContentType;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
-
-import java.net.http.HttpHeaders;
 
 @Service
 public class FLightService {
@@ -21,7 +18,7 @@ public class FLightService {
     @Value("${AMADEUS_AUTH_URL}")
     private String authURL;
 
-    WebClient.Builder webClientBuilder = WebClient.builder();
+    static WebClient.Builder webClientBuilder = WebClient.builder();
 
     /*
         Before making our API Call, we need to get our access token. To retrieve this token, we must send a POST
@@ -32,11 +29,8 @@ public class FLightService {
         webClientBuilder
     }
 
-    public String getCodes(){
-        webClientBuilder.
-
-
-        return "Hey";
+    public static void searchFlights(){
+        webClientBuilder
     }
 
 
