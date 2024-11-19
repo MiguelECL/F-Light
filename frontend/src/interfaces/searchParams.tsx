@@ -1,5 +1,3 @@
-import { Dayjs } from "dayjs";
-
 export interface searchParams{
     departureAirport: string | null,
     arrivalAirport: string | null, 

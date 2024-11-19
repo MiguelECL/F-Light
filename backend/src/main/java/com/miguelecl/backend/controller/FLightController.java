@@ -1,28 +1,43 @@
 package com.miguelecl.backend.controller;
 
-import com.miguelecl.backend.model.SearchParams;
+import com.miguelecl.backend.models.CitySearchResponse;
+import com.miguelecl.backend.models.FlightOffersResponse.FlightOfferResponse;
+import com.miguelecl.backend.models.SearchParams;
 import com.miguelecl.backend.service.FLightService;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+
 
 @RestController
 @RequestMapping("/")
 @CrossOrigin("http://localhost:8000")
-
 public class FLightController {
 
-    //This mapping receives the info to be searched for by the frontend API
-    @PostMapping("/search")
-    public SearchParams searchParams(@RequestBody SearchParams searchParams){
-        FLightService.searchFlights();
+    private final FLightService flightService;
 
-        return
+    @Autowired
+    public FLightController(FLightService flightService) {
+        this.flightService = flightService;
     }
 
-    //Mapping for Getting Airport/Airline codes
-    @GetMapping("/code")
-    public String getString() {
-
+    @PostMapping("/Test")
+    public String TestAPI(@RequestBody String Keyword){
+        return "YEAH";
     }
+
+    //This mapping receives the keyword input from the frontend to search for city/airport
+    @GetMapping("/SearchAirportCity/{keyword}")
+    public String SearchAirportAPI(@PathVariable String keyword){
+        String AuthToken = flightService.getAuthToken();
+        return flightService.searchAirportCity(AuthToken, keyword);
+    }
+
+    @PostMapping("/SearchFlights")
+    public FlightOfferResponse SearchFlightsAPI(@RequestBody SearchParams searchParams){
+        String AuthToken = flightService.getAuthToken();
+        return flightService.searchFlights(AuthToken);
+    }
+
 }
 
