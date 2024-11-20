@@ -10,7 +10,9 @@ export const useSearch = (params: searchParams) => {
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(params)
     }).then(response => {
-
+        return response.json();
+    }).then(data => {
+        return data;
     }).catch(error => {
         console.log(error);
     })

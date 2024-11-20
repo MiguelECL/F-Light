@@ -2,12 +2,14 @@ package com.miguelecl.backend.service;
 import com.miguelecl.backend.models.AuthTokenResponse;
 import com.miguelecl.backend.models.CitySearchResponse;
 import com.miguelecl.backend.models.FlightOffersResponse.FlightOfferResponse;
+import com.miguelecl.backend.models.SearchParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.lang.reflect.Array;
+import java.util.Objects;
 
 
 @Service
@@ -76,15 +78,32 @@ public class FLightService {
                 .block();
     }
 
-    public FlightOfferResponse searchFlights(String AuthToken){
+    public void searchFlights(String AuthToken, SearchParams searchParams){
+        String originLocationCodeQuery = "?OriginLocationCode=" + searchParams.getDepartureAirport();
+        String destinationLocationCodeQuery = "&destinationLocationCode=" + searchParams.getArrivalAirport();
+        String departureDateQuery = "&departureDate=" + searchParams.getDepartureDate();
+        String returnDateQuery;
+        if (!Objects.equals(searchParams.getReturnDate(), "")){
+            returnDateQuery = "&returnDate=" + searchParams.getReturnDate();
+        } else {
+            returnDateQuery = "";
+        }
+        String adultsQuery = "&adults=" + searchParams.getAdults();
+        String nonStopQuery = "&nonStop=" + searchParams.isNonStop();
+        String currencyCodeQuery = "&CurrencyCode=" + searchParams.getCurrencyCode();
 
-        return webClientBuilder.build()
+        String finalURL = flightSearchURL + originLocationCodeQuery + destinationLocationCodeQuery +
+                departureDateQuery + returnDateQuery + adultsQuery + nonStopQuery + currencyCodeQuery;
+
+        FlightOfferResponse response = webClientBuilder.build()
                 .get()
-                .uri(flightSearchURL)
+                .uri(finalURL)
                 .header("Authorization","Bearer " + AuthToken)
                 .retrieve()
                 .bodyToMono(FlightOfferResponse.class)
                 .block();
+
+        System.out.println(response);
     }
 
 }

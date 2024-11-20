@@ -21,10 +21,12 @@ public class FLightController {
         this.flightService = flightService;
     }
 
+    // REMOVE --------
     @PostMapping("/Test")
     public String TestAPI(@RequestBody String Keyword){
         return "YEAH";
     }
+    // --------------
 
     //This mapping receives the keyword input from the frontend to search for city/airport
     @GetMapping("/SearchAirportCity/{keyword}")
@@ -34,9 +36,13 @@ public class FLightController {
     }
 
     @PostMapping("/SearchFlights")
-    public FlightOfferResponse SearchFlightsAPI(@RequestBody SearchParams searchParams){
+    public void SearchFlightsAPI(@RequestBody SearchParams searchParams){
         String AuthToken = flightService.getAuthToken();
-        return flightService.searchFlights(AuthToken);
+    }
+
+    @GetMapping("/GetResults")
+    public String getResults(){
+        return "Yeah";
     }
 
 }
