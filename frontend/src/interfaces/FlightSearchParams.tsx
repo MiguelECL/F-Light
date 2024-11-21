@@ -1,4 +1,4 @@
-export interface searchParams{
+export interface FlightSearchParams{
     departureAirport: string | null | undefined,
     destinationAirport: string | null | undefined, 
     departureDate: string,

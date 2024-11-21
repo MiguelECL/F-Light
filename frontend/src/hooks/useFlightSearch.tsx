@@ -1,26 +1,20 @@
-import { useState } from "react";
-import FlightSearchResults from "../interfaces/FlightSearchResults";
+import { FlightSearchParams } from "../interfaces/FlightSearchParams";
 
-const useFlightSearch = () => {
+export const useFlightSearch = (params: FlightSearchParams) => {
+    // Function that calls the backend API to search for flights
 
-    const [data, setData] = useState<FlightSearchResults[]>([])
+    const backendURL:string = "http://localhost:7000/SearchFlights"
 
-    //fetch data returned by API
-    const backendURL = "http://localhost:7000/getResults";
     fetch(backendURL, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json"
-        },
-    }).then((response) => {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(params)
+    }).then(response => {
         return response.json();
-    }).then((responseData) => {
-        setData(responseData.data);
-    }).catch((error) => {
+    }).then(data => {
+        return data;
+    }).catch(error => {
         console.log(error);
     })
 
-    return data;
 }
- 
-export default useFlightSearch;

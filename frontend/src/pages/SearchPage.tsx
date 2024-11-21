@@ -4,7 +4,7 @@ import { ChangeEvent, SyntheticEvent, useRef, useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useNavigate } from "react-router-dom";
-import { useSearch } from "../Hooks/useSearch";
+import { useFlightSearch } from "../Hooks/useFlightSearch";
 import { ACSearchResult } from "../interfaces/ACSearchResult";
 
 const SearchPage = () => {
@@ -36,6 +36,7 @@ const SearchPage = () => {
         setChecked(event.target.checked)
     }
 
+    // REFACTOR!    
     const handleSubmit = (e: SyntheticEvent) => {
         e.preventDefault();
 
@@ -52,7 +53,7 @@ const SearchPage = () => {
             currencyCode: currency
         };
 
-        useSearch(params);
+        useFlightSearch(params);
         navigate("/results");
     }
 
@@ -63,6 +64,7 @@ const SearchPage = () => {
     const [arrivalAirport, setArrivalAirport] = useState<ACSearchResult | null>();
     const lastCalledRef = useRef(0);
 
+    // # REFACTOR
     const handleAutocomplete = (keyword: string, flag: number) => {
         if (flag == 0) {
             setInputDepartureAirport(keyword);

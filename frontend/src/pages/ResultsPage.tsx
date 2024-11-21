@@ -1,6 +1,5 @@
 import { Button, Divider, List, ListItem, ListItemText } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import useFlightSearch from "../Hooks/useFlightSearch";
 import { sampleResponse } from "../tests/SampleResponse";
 
 const ResultsPage = () => {
