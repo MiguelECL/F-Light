@@ -1,4 +1,4 @@
-import { Autocomplete, Button, Checkbox, FormControl, FormControlLabel, Grid2, Input, InputLabel, MenuItem, Select, SelectChangeEvent, Slider, Stack, TextField, Typography } from "@mui/material";
+import { Autocomplete, Button, Checkbox, FormControl, FormControlLabel, Grid2, Input, InputLabel, MenuItem, Select, SelectChangeEvent, Slider, Stack, TextField, Typography} from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { ChangeEvent, SyntheticEvent, useRef, useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
@@ -6,6 +6,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useNavigate } from "react-router-dom";
 import { useFlightSearch } from "../Hooks/useFlightSearch";
 import { ACSearchResult } from "../interfaces/ACSearchResult";
+import { handleAutocomplete } from "../components/containers/handleAutocomplete";
 
 const SearchPage = () => {
     const [departureDate, setDepartureDate] = useState<Dayjs | null>(dayjs());
@@ -40,9 +41,6 @@ const SearchPage = () => {
     const handleSubmit = (e: SyntheticEvent) => {
         e.preventDefault();
 
-        // var departureDateString = 
-        // var returnDateString =
-
         const params = {
             departureAirport: departureAirport?.iataCode, 
             destinationAirport: arrivalAirport?.iataCode,
@@ -57,46 +55,12 @@ const SearchPage = () => {
         navigate("/results");
     }
 
+    
     const [options, setOptions] = useState<readonly ACSearchResult[]>([]);
     const [inputDepartureAirport, setInputDepartureAirport] = useState("");
     const [inputArrivalAirport, setInputArrivalAirport] = useState("");
     const [departureAirport, setDepartureAirport] = useState<ACSearchResult | null>(); // How to initialize an empty object?
     const [arrivalAirport, setArrivalAirport] = useState<ACSearchResult | null>();
-    const lastCalledRef = useRef(0);
-
-    // # REFACTOR
-    const handleAutocomplete = (keyword: string, flag: number) => {
-        if (flag == 0) {
-            setInputDepartureAirport(keyword);
-        } else {
-            setInputArrivalAirport(keyword);
-        }
-        const now = Date.now();
-
-        if (now - lastCalledRef.current < 1000 || keyword == "") {
-            // If less than 2 seconds have passed, ignore.
-            return
-        }
-
-        const backendURL = "http://localhost:7000/SearchAirportCity/" + [keyword];
-
-        fetch(backendURL, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json"
-            },
-        }).then((response) => {
-            if (response.ok) {
-                return response.json();
-            } else throw new Error("Server not Responding!")
-        }).then((responseData) => {
-            setOptions([...responseData.data])
-        }).catch((error) => {
-            console.error("Failed!", error.message)
-        });
-
-        lastCalledRef.current = now;
-    }
 
     const handleClose = () => {
         setOptions([]);
@@ -108,8 +72,8 @@ const SearchPage = () => {
                 <form onSubmit={(e) => { handleSubmit(e) }}>
                     <Stack spacing={1}>
                         <h1> Search Flights</h1>
-                        <Autocomplete clearOnEscape onClose={handleClose} isOptionEqualToValue={(option,value) => option.detailedName === value.name} getOptionLabel={(option:ACSearchResult) => option.name} options={options} value={departureAirport} onChange={(event: any, newValue: ACSearchResult | null) => setDepartureAirport(newValue)} inputValue={inputDepartureAirport} onInputChange={(event, newInputValue) => handleAutocomplete(newInputValue, 0)}  renderInput={(P) => <TextField {...P} required label="Departure Airport" />} ></Autocomplete>
-                        <Autocomplete clearOnEscape onClose={handleClose} isOptionEqualToValue={(option,value) => option.detailedName === value.name} getOptionLabel={(option:ACSearchResult) => option.name} options={options} value={arrivalAirport} onChange={(event: any, newValue: ACSearchResult | null) => setArrivalAirport(newValue)} inputValue={inputArrivalAirport} onInputChange={(event, newInputValue) => handleAutocomplete(newInputValue, 1)} renderInput={(P) => <TextField {...P} required label="Arrival Airport" />}></Autocomplete>
+                        <Autocomplete clearOnEscape onClose={handleClose} isOptionEqualToValue={(option,value) => option.detailedName === value.name} getOptionLabel={(option:ACSearchResult) => option.name} options={options} value={departureAirport} onChange={(event: any, newValue: ACSearchResult | null) => setDepartureAirport(newValue)} inputValue={inputDepartureAirport} onInputChange={(event, newInputValue) => handleAutocomplete(newInputValue, 0, setInputDepartureAirport, setInputArrivalAirport, setOptions)}  renderInput={(P) => <TextField {...P} required label="Departure Airport" />} ></Autocomplete>
+                        <Autocomplete clearOnEscape onClose={handleClose} isOptionEqualToValue={(option,value) => option.detailedName === value.name} getOptionLabel={(option:ACSearchResult) => option.name} options={options} value={arrivalAirport} onChange={(event: any, newValue: ACSearchResult | null) => setArrivalAirport(newValue)} inputValue={inputArrivalAirport} onInputChange={(event, newInputValue) => handleAutocomplete(newInputValue, 1, setInputDepartureAirport, setInputArrivalAirport, setOptions)} renderInput={(P) => <TextField {...P} required label="Arrival Airport" />}></Autocomplete>
                         <DatePicker defaultValue={dayjs()} minDate={dayjs()} value={departureDate} onChange={(departureDate) => setDepartureDate(departureDate)} />
                         <DatePicker disablePast value={returnDate} onChange={(returnDate) => setReturnDate(returnDate)} />
                         <Grid2 container spacing={2} sx={{ alignItems: 'center' }}>
