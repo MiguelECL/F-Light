@@ -16,5 +16,5 @@ export const useFlightSearch = (params: FlightSearchParams) => {
     }).catch(error => {
         console.log(error);
     })
-
+    
 }

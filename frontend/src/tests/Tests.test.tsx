@@ -1,16 +1,12 @@
 import { describe, test, expect } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
-import PageSearch from '../pages/SearchPage'
-import App from '../App'
-import ResultsPage from '../pages/ResultsPage'
-import DetailsPage from '../pages/DetailsPage'
-import React from 'react'
+import ResultsPage from '../components/presentational/ResultsPage'
+import DetailsPage from '../components/presentational/DetailsPage'
 import { BrowserRouter } from 'react-router-dom'
 import NavBar from '../components/presentational/NavBar'
-import SearchPage from '../pages/SearchPage'
+import SearchPage from '../components/presentational/SearchPage'
 import { sampleResponse } from './SampleResponse'
-import { Stack } from '@mui/material'
 
 describe("Test NavBar", () => {
 
@@ -47,7 +43,7 @@ describe("Test Results Page", () => {
     test("Render Return Button",()=>{
         render(
             <BrowserRouter>
-                <ResultsPage />
+                <ResultsPage/>
             </BrowserRouter>
         );
         expect(screen.getAllByText("Search", {exact: false})).toBeInTheDocument;

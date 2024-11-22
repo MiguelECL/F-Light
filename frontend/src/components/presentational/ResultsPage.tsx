@@ -1,23 +1,33 @@
 import { Box, Button, Container, Stack } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import { sampleResponse } from "../tests/SampleResponse";
-import FlightOffer from "../interfaces/FlightOffer";
-import FlightSearchResponse from "../interfaces/FlightSearchResponse";
-import { OfferParser } from "../components/containers/OfferParser";
-import FlightOfferResult from "../components/presentational/FlightOfferResult";
-import OneWayFlightOfferResult from "../components/presentational/OneWayFlightOfferResult";
-import ParsedOffer from "../interfaces/ParsedOffer";
+import { useLocation, useNavigate } from "react-router-dom";
+import { sampleResponse } from "../../tests/SampleResponse";
+import FlightOffer from "../../interfaces/FlightOffer";
+import FlightSearchResponse from "../../interfaces/FlightSearchResponse";
+import { OfferParser } from "../containers/OfferParser";
+import FlightOfferResult from "./FlightOfferResult";
+import OneWayFlightOfferResult from "./OneWayFlightOfferResult";
+import ParsedOffer from "../../interfaces/ParsedOffer";
+import { useRef, useState } from "react";
+import { GetResult } from "../containers/getResult";
 
 const ResultsPage = ({response}:{response?:string}) => {
 
-    let parsedResponse: FlightSearchResponse;
+    const [loading, setLoading] = useState(true);
+    const location = useLocation();
 
+    var parsedResponse:FlightSearchResponse;
     // If no response is given, parse the sample response to allow for testing, otherwise parse the provided response
-    if (response != undefined){
-        parsedResponse = JSON.parse(response);
+
+    if(!response){
+        const state = location.state;
+        console.log(location.state);
+        parsedResponse = JSON.parse(state);
+        setLoading(false)
     } else {
-        parsedResponse = JSON.parse(sampleResponse);
+        parsedResponse = JSON.parse(response);
+        setLoading(false)
     }
+
     // Function that parses the response
     // Alternatively, I can do this in the backend and do a fetch...
     const navigate = useNavigate();
@@ -26,7 +36,7 @@ const ResultsPage = ({response}:{response?:string}) => {
         navigate("/details", { state: {parsedOffer} });   // use react router to route to this page while providing props.
     }
 
-    return (
+    if(!loading) return (
         <Container maxWidth="lg" sx={{ marginTop: 20, overflow: "scroll" }}>
             <Button onClick={() => navigate("/")} variant="contained" fullWidth> &lt; Return to Search</Button>
             <Stack>

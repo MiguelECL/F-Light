@@ -1,11 +1,11 @@
 import { Button, Container, Grid2 as Grid } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
-import PriceBreakdown from "../components/presentational/PriceBreakdown";
-import SegmentComponent from "../components/presentational/SegmentComponent";
-import Segment from "../interfaces/Segment";
-import ParsedOffer from "../interfaces/ParsedOffer";
-import { OfferParser } from "../components/containers/OfferParser";
-import { sampleResponse } from "../tests/SampleResponse";
+import PriceBreakdown from "./PriceBreakdown";
+import SegmentComponent from "./SegmentComponent";
+import Segment from "../../interfaces/Segment";
+import ParsedOffer from "../../interfaces/ParsedOffer";
+import { OfferParser } from "../containers/OfferParser";
+import { sampleResponse } from "../../tests/SampleResponse";
 
 const DetailsPage = () => {
     const location = useLocation();

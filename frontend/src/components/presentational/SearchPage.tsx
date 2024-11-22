@@ -4,9 +4,10 @@ import { ChangeEvent, SyntheticEvent, useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useNavigate } from "react-router-dom";
-import { useFlightSearch } from "../Hooks/useFlightSearch";
-import { ACSearchResult } from "../interfaces/ACSearchResult";
-import { handleAutocomplete } from "../components/containers/handleAutocomplete";
+import { useFlightSearch } from "../../Hooks/useFlightSearch";
+import { ACSearchResult } from "../../interfaces/ACSearchResult";
+import { handleAutocomplete } from "../containers/handleAutocomplete";
+import { GetResult } from "../containers/getResult";
 
 const SearchPage = () => {
     const [departureDate, setDepartureDate] = useState<Dayjs | null>(dayjs());
@@ -41,18 +42,25 @@ const SearchPage = () => {
     const handleSubmit = (e: SyntheticEvent) => {
         e.preventDefault();
 
+        if (dayjs(returnDate).isValid() == false){
+            var returnDateString = "";
+        } else {
+            var returnDateString = dayjs(returnDate).format("YYYY-MM-DD")
+        }
+
         const params = {
             departureAirport: departureAirport?.iataCode,
             destinationAirport: arrivalAirport?.iataCode,
             departureDate: dayjs(departureDate).format("YYYY-MM-DD"),
-            returnDate: dayjs(returnDate).format("YYYY-MM-DD"),
+            returnDate: returnDateString, 
             numAdults: numAdults,
             nonStop: checked,
             currencyCode: currency
         };
 
         useFlightSearch(params);
-        navigate("/results");
+        var response = GetResult();
+        navigate("/results", {state: response});
     }
 
 

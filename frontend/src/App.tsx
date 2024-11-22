@@ -1,10 +1,10 @@
 import { Route, Routes } from 'react-router-dom'
 
 import NavBar from './components/presentational/NavBar';
-import About from './pages/About';
-import SearchPage from './pages/SearchPage';
-import ResultsPage from './pages/ResultsPage';
-import DetailsPage from './pages/DetailsPage';
+import About from './components/presentational/About';
+import SearchPage from './components/presentational/SearchPage';
+import ResultsPage from './components/presentational/ResultsPage';
+import DetailsPage from './components/presentational/DetailsPage';
 import { Box } from '@mui/material';
 
 const App = () => {

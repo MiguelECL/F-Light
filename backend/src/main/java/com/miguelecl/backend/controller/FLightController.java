@@ -36,7 +36,10 @@ public class FLightController {
         return cachedResponse;
     }
 
-    
+    @GetMapping("/GetResult")
+    public String GetResult(){
+        return cachedResponse;
+    }
 
 }
 
