@@ -19,6 +19,7 @@ export default defineConfig({
   },
   plugins: [react()],
   test:{
+    globals: true,
     environment: "jsdom",
     coverage:{
       reporter:["text", "html"]

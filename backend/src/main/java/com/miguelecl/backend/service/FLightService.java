@@ -78,7 +78,7 @@ public class FLightService {
                 .block();
     }
 
-    public void searchFlights(String AuthToken, SearchParams searchParams){
+    public String searchFlights(String AuthToken, SearchParams searchParams){
         String originLocationCodeQuery = "?OriginLocationCode=" + searchParams.getDepartureAirport();
         String destinationLocationCodeQuery = "&destinationLocationCode=" + searchParams.getArrivalAirport();
         String departureDateQuery = "&departureDate=" + searchParams.getDepartureDate();
@@ -95,15 +95,16 @@ public class FLightService {
         String finalURL = flightSearchURL + originLocationCodeQuery + destinationLocationCodeQuery +
                 departureDateQuery + returnDateQuery + adultsQuery + nonStopQuery + currencyCodeQuery;
 
-        FlightOfferResponse response = webClientBuilder.build()
+        String response = webClientBuilder.build()
                 .get()
                 .uri(finalURL)
                 .header("Authorization","Bearer " + AuthToken)
                 .retrieve()
-                .bodyToMono(FlightOfferResponse.class) // What if I turn this into a string?? would it be better?
+                .bodyToMono(String.class) // What if I turn this into a string?? would it be better?
                 .block();
 
         System.out.println(response);
+        return response;
     }
 
 }

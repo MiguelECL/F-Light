@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin("http://localhost:8000")
 public class FLightController {
 
+    private String cachedResponse;
     private final FLightService flightService;
 
     @Autowired
@@ -29,14 +30,13 @@ public class FLightController {
     }
 
     @PostMapping("/SearchFlights")
-    public void SearchFlightsAPI(@RequestBody SearchParams searchParams){
+    public String SearchFlightsAPI(@RequestBody SearchParams searchParams){
         String AuthToken = flightService.getAuthToken();
+        cachedResponse = flightService.searchFlights(AuthToken, searchParams);
+        return cachedResponse;
     }
 
-    @GetMapping("/GetResults")
-    public String getResults(){
-        return "Yeah";
-    }
+    
 
 }
 

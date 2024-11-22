@@ -1,14 +1,15 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 
 import NavBar from './components/presentational/NavBar';
 import About from './pages/About';
 import SearchPage from './pages/SearchPage';
 import ResultsPage from './pages/ResultsPage';
 import DetailsPage from './pages/DetailsPage';
+import { Box } from '@mui/material';
 
 const App = () => {
     return (
-        <BrowserRouter>
+        <Box>
             <NavBar />
             <Routes>
                 <Route path="/" element={<SearchPage />}></Route>
@@ -16,7 +17,7 @@ const App = () => {
                 <Route path="/results" element={<ResultsPage />}></Route>
                 <Route path="/details" element={<DetailsPage />}></Route>
             </Routes>
-        </BrowserRouter>
+        </Box>
     );
 }
 

@@ -1,4 +1,4 @@
-import { Autocomplete, Button, Checkbox, Container, FormControl, FormControlLabel, Grid2 as Grid, Input, InputLabel, MenuItem, Select, SelectChangeEvent, Slider, Stack, TextField, Typography} from "@mui/material";
+import { Autocomplete, Button, Checkbox, Container, FormControl, FormControlLabel, Grid2 as Grid, Input, InputLabel, MenuItem, Select, SelectChangeEvent, Slider, Stack, TextField, Typography } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { ChangeEvent, SyntheticEvent, useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
@@ -21,13 +21,13 @@ const SearchPage = () => {
         setCurrency(event.target.value as string);
     }
 
-    const handleSlider = (event: Event, newValue:number | number[]) => {
+    const handleSlider = (event: Event, newValue: number | number[]) => {
         setNumAdults(newValue as number);
     }
 
-    const handleInputChange = ( event: ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         let num = Number(event.target.value);
-        if (num > 5){ 
+        if (num > 5) {
             num = 5;
         }
         setNumAdults(num);
@@ -42,10 +42,10 @@ const SearchPage = () => {
         e.preventDefault();
 
         const params = {
-            departureAirport: departureAirport?.iataCode, 
+            departureAirport: departureAirport?.iataCode,
             destinationAirport: arrivalAirport?.iataCode,
             departureDate: dayjs(departureDate).format("YYYY-MM-DD"),
-            returnDate: dayjs(returnDate).format("YYYY-MM-DD"), 
+            returnDate: dayjs(returnDate).format("YYYY-MM-DD"),
             numAdults: numAdults,
             nonStop: checked,
             currencyCode: currency
@@ -55,7 +55,7 @@ const SearchPage = () => {
         navigate("/results");
     }
 
-    
+
     const [options, setOptions] = useState<readonly ACSearchResult[]>([]);
     const [inputDepartureAirport, setInputDepartureAirport] = useState("");
     const [inputArrivalAirport, setInputArrivalAirport] = useState("");
@@ -66,18 +66,26 @@ const SearchPage = () => {
         setOptions([]);
     }
 
-    const minDate=dayjs(departureDate?.format("YYYY-MM-DD"));
-    
-
+    const minDate = dayjs(departureDate?.format("YYYY-MM-DD"));
 
     return (
-        <Container maxWidth="sm" sx={{marginTop: 20}}>
+        <Container maxWidth="sm" sx={{ marginTop: 20 }}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <form onSubmit={(e) => { handleSubmit(e) }}>
                     <Stack spacing={1}>
                         <h1> Search Flights</h1>
-                        <Autocomplete clearOnEscape onClose={handleClose} isOptionEqualToValue={(option,value) => option.detailedName === value.name} getOptionLabel={(option:ACSearchResult) => option.name} options={options} value={departureAirport} onChange={(event: any, newValue: ACSearchResult | null) => setDepartureAirport(newValue)} inputValue={inputDepartureAirport} onInputChange={(event, newInputValue) => handleAutocomplete(newInputValue, 0, setInputDepartureAirport, setInputArrivalAirport, setOptions)}  renderInput={(P) => <TextField {...P} required label="Departure Airport" />} ></Autocomplete>
-                        <Autocomplete clearOnEscape onClose={handleClose} isOptionEqualToValue={(option,value) => option.detailedName === value.name} getOptionLabel={(option:ACSearchResult) => option.name} options={options} value={arrivalAirport} onChange={(event: any, newValue: ACSearchResult | null) => setArrivalAirport(newValue)} inputValue={inputArrivalAirport} onInputChange={(event, newInputValue) => handleAutocomplete(newInputValue, 1, setInputDepartureAirport, setInputArrivalAirport, setOptions)} renderInput={(P) => <TextField {...P} required label="Arrival Airport" />}></Autocomplete>
+                        <Autocomplete clearOnEscape onClose={handleClose} isOptionEqualToValue={(option, value) => option.detailedName === value.name}
+                            getOptionLabel={(option: ACSearchResult) => option.name} options={options} value={departureAirport}
+                            onChange={(event: any, newValue: ACSearchResult | null) => setDepartureAirport(newValue)} inputValue={inputDepartureAirport}
+                            onInputChange={(event, newInputValue) => handleAutocomplete(newInputValue, 0, setInputDepartureAirport, setInputArrivalAirport, setOptions)}
+                            renderInput={(P) => <TextField {...P} required label="Departure Airport" />} >
+                        </Autocomplete>
+                        <Autocomplete clearOnEscape onClose={handleClose} isOptionEqualToValue={(option, value) => option.detailedName === value.name}
+                            getOptionLabel={(option: ACSearchResult) => option.name} options={options} value={arrivalAirport}
+                            onChange={(event: any, newValue: ACSearchResult | null) => setArrivalAirport(newValue)} inputValue={inputArrivalAirport}
+                            onInputChange={(event, newInputValue) => handleAutocomplete(newInputValue, 1, setInputDepartureAirport, setInputArrivalAirport, setOptions)} 
+                            renderInput={(P) => <TextField {...P} required label="Arrival Airport" />}>
+                        </Autocomplete>
                         <DatePicker defaultValue={dayjs()} minDate={dayjs()} value={departureDate} onChange={(departureDate) => setDepartureDate(departureDate)} />
                         <DatePicker disablePast minDate={minDate} onChange={(returnDate) => setReturnDate(returnDate)} />
                         <Grid container spacing={2} sx={{ alignItems: 'center' }}>

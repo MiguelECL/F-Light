@@ -41,15 +41,20 @@ export const OfferParser = (offer: FlightOffer, dictionaries: Dictionary) => {
     //Obtain number of travelers
     const numAdults = offer.travelerPricings.length;
 
-    // Obtain prices (total and per traveler)
+    // Obtain prices (total and per traveler), and fees,
     const currency = offer.price.currency;
     const totalPrice = offer.price.total + " " + currency;
     const perTravelerPrice = offer.travelerPricings[0].price.total + " " + currency;
+    const basePrice = offer.price.base;
+    const fees = offer.price.fees;
 
     // Obtain operating airline
     const carrierCode = offer.itineraries[0].segments[0].operating.carrierCode;
     const carrierName = dictionaries.carriers[carrierCode]
     const carrierString = `${carrierName} (${carrierCode})`
+
+    // Obtain segments
+    const segments = offer.itineraries[0].segments;
 
     const data: ParsedOffer = {
         oneWay: oneWay,
@@ -63,8 +68,11 @@ export const OfferParser = (offer: FlightOffer, dictionaries: Dictionary) => {
         stopsInfo: stopsInfo,
         carrierInfo: carrierString,
         totalPrice: totalPrice,
+        basePrice: basePrice,
+        fees: fees,
         numAdults: numAdults,
-        perTravelerPrice: perTravelerPrice
+        perTravelerPrice: perTravelerPrice,
+        segments: segments
     }
 
     return data;

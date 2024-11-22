@@ -15,3 +15,7 @@ a, a:visited{
 .AboutPage a{
   color: black
 }
+
+.DetailsPage {
+  color: rgb(25, 131, 223)
+}
