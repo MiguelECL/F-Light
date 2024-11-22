@@ -100,7 +100,7 @@ public class FLightService {
                 .uri(finalURL)
                 .header("Authorization","Bearer " + AuthToken)
                 .retrieve()
-                .bodyToMono(FlightOfferResponse.class)
+                .bodyToMono(FlightOfferResponse.class) // What if I turn this into a string?? would it be better?
                 .block();
 
         System.out.println(response);

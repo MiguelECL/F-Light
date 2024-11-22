@@ -21,13 +21,6 @@ public class FLightController {
         this.flightService = flightService;
     }
 
-    // REMOVE --------
-    @PostMapping("/Test")
-    public String TestAPI(@RequestBody String Keyword){
-        return "YEAH";
-    }
-    // --------------
-
     //This mapping receives the keyword input from the frontend to search for city/airport
     @GetMapping("/SearchAirportCity/{keyword}")
     public String SearchAirportAPI(@PathVariable String keyword){

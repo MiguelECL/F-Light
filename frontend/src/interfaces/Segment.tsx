@@ -1,4 +1,6 @@
-export interface Segment {
+import FlightStop from "./FlightStop"
+
+export default interface Segment {
     departure: {
         iataCode: string,
         terminal: string,
@@ -20,5 +22,6 @@ export interface Segment {
     duration: string,
     id: string,
     numberOfStops: number,
-    blacklistedInEU: boolean
+    blacklistedInEU: boolean,
+    stops?: FlightStop[]
 }

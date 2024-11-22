@@ -1,6 +1,6 @@
-import { Autocomplete, Button, Checkbox, FormControl, FormControlLabel, Grid2, Input, InputLabel, MenuItem, Select, SelectChangeEvent, Slider, Stack, TextField, Typography} from "@mui/material";
+import { Autocomplete, Button, Checkbox, Container, FormControl, FormControlLabel, Grid2 as Grid, Input, InputLabel, MenuItem, Select, SelectChangeEvent, Slider, Stack, TextField, Typography} from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { ChangeEvent, SyntheticEvent, useRef, useState } from "react";
+import { ChangeEvent, SyntheticEvent, useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useNavigate } from "react-router-dom";
@@ -66,8 +66,12 @@ const SearchPage = () => {
         setOptions([]);
     }
 
+    const minDate=dayjs(departureDate?.format("YYYY-MM-DD"));
+    
+
+
     return (
-        <div>
+        <Container maxWidth="sm" sx={{marginTop: 20}}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <form onSubmit={(e) => { handleSubmit(e) }}>
                     <Stack spacing={1}>
@@ -75,32 +79,38 @@ const SearchPage = () => {
                         <Autocomplete clearOnEscape onClose={handleClose} isOptionEqualToValue={(option,value) => option.detailedName === value.name} getOptionLabel={(option:ACSearchResult) => option.name} options={options} value={departureAirport} onChange={(event: any, newValue: ACSearchResult | null) => setDepartureAirport(newValue)} inputValue={inputDepartureAirport} onInputChange={(event, newInputValue) => handleAutocomplete(newInputValue, 0, setInputDepartureAirport, setInputArrivalAirport, setOptions)}  renderInput={(P) => <TextField {...P} required label="Departure Airport" />} ></Autocomplete>
                         <Autocomplete clearOnEscape onClose={handleClose} isOptionEqualToValue={(option,value) => option.detailedName === value.name} getOptionLabel={(option:ACSearchResult) => option.name} options={options} value={arrivalAirport} onChange={(event: any, newValue: ACSearchResult | null) => setArrivalAirport(newValue)} inputValue={inputArrivalAirport} onInputChange={(event, newInputValue) => handleAutocomplete(newInputValue, 1, setInputDepartureAirport, setInputArrivalAirport, setOptions)} renderInput={(P) => <TextField {...P} required label="Arrival Airport" />}></Autocomplete>
                         <DatePicker defaultValue={dayjs()} minDate={dayjs()} value={departureDate} onChange={(departureDate) => setDepartureDate(departureDate)} />
-                        <DatePicker disablePast value={returnDate} onChange={(returnDate) => setReturnDate(returnDate)} />
-                        <Grid2 container spacing={2} sx={{ alignItems: 'center' }}>
-                            <Grid2>
+                        <DatePicker disablePast minDate={minDate} onChange={(returnDate) => setReturnDate(returnDate)} />
+                        <Grid container spacing={2} sx={{ alignItems: 'center' }}>
+                            <Grid size={4}>
                                 <Typography>Number of Adults: </Typography>
-                            </Grid2>
-                            <Grid2 size={5}>
+                            </Grid>
+                            <Grid size={6}>
                                 <Slider defaultValue={1} valueLabelDisplay="auto" step={1} min={1} max={5} value={numAdults} onChange={handleSlider} />
-                            </Grid2>
-                            <Grid2>
+                            </Grid>
+                            <Grid size={2}>
                                 <Input inputProps={{ type: "number", step: 1, min: 1, max: 5 }} size="small" value={numAdults} onChange={handleInputChange} />
-                            </Grid2>
-                        </Grid2>
+                            </Grid>
+                        </Grid>
                         <FormControlLabel control={<Checkbox checked={checked} onChange={handleCheckbox} />} label="Non-stop" />
-                        <FormControl required fullWidth variant="filled">
-                            <InputLabel>Currency</InputLabel>
-                            <Select value={currency} label="currency" onChange={handleCurrencyChange}>
-                                <MenuItem value={"USD"}>USD</MenuItem>
-                                <MenuItem value={"MXN"}>MXN</MenuItem>
-                                <MenuItem value={"EUR"}>EUR</MenuItem>
-                            </Select>
-                        </FormControl>
-                        <Button type="submit" variant="contained">Search</Button>
+                        <Grid container spacing={2}>
+                            <Grid size="auto">
+                            <FormControl required fullWidth variant="filled">
+                                <InputLabel>Currency</InputLabel>
+                                <Select value={currency} label="currency" onChange={handleCurrencyChange}>
+                                    <MenuItem value={"USD"}>USD</MenuItem>
+                                    <MenuItem value={"MXN"}>MXN</MenuItem>
+                                    <MenuItem value={"EUR"}>EUR</MenuItem>
+                                </Select>
+                            </FormControl>
+                            </Grid>
+                            <Grid size="grow">
+                                <Button fullWidth type="submit" variant="contained">Search</Button>
+                            </Grid>
+                        </Grid>
                     </Stack>
                 </form>
             </LocalizationProvider>
-        </div>
+        </Container>
     );
 }
 

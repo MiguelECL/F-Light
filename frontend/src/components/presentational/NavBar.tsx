@@ -1,13 +1,14 @@
+import { AppBar, Box, Button, Toolbar } from "@mui/material";
 import { Link } from "react-router-dom";
 
 const NavBar = () => {
     return (
-        <div>
-            <h1><Link to="/">F-Light</Link></h1>
-            <div>
-                <Link to="/about">About</Link>
-            </div>
-        </div>
+        <AppBar position="static">
+            <Toolbar>
+                <Button><Link to="/"><h1>F-Light</h1></Link></Button>
+                <Button><Link to="/about"><h2>About</h2></Link></Button>
+            </Toolbar>
+        </AppBar>
     );
 }
 
