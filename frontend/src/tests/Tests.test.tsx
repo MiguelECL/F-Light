@@ -6,7 +6,6 @@ import DetailsPage from '../components/presentational/DetailsPage'
 import { BrowserRouter } from 'react-router-dom'
 import NavBar from '../components/presentational/NavBar'
 import SearchPage from '../components/presentational/SearchPage'
-import { sampleResponse } from './SampleResponse'
 
 describe("Test NavBar", () => {
 

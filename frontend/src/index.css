@@ -13,7 +13,12 @@ a, a:visited{
 }
 
 .AboutPage a{
-  color: black
+  color: rgb(0, 110, 244);
+  font-size: 1.3em; 
+}
+
+.AboutPage {
+  font-size: 1.1em;
 }
 
 .DetailsPage {

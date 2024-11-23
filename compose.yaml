@@ -1,10 +1,10 @@
 services:
   frontend:
-    image: f-light-frontend:latest  
+    build: ./frontend
     ports: 
       - "8000:8000"
 
   backend:
-    image: f-light-backend:latest
+    build: ./backend
     ports: 
       - "7000:7000"

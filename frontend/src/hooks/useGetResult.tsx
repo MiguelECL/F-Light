@@ -1,10 +1,12 @@
+import React from "react";
 import FlightSearchResponse from "../interfaces/FlightSearchResponse";
 
 export  const useGetResult = (results: FlightSearchResponse | undefined, 
     setResults: React.Dispatch<React.SetStateAction<FlightSearchResponse | undefined>>,
-    setLoading: React.Dispatch<React.SetStateAction<boolean>>) => {
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>,
+    setGoodRequest: React.Dispatch<React.SetStateAction<boolean>>) => {
 
-    const searchResultURL = "http://localhost:7000/GetResult"
+    const searchResultURL = import.meta.env.VITE_GETRESULT_URL;
 
     fetch(searchResultURL, {
         method: "GET",
@@ -20,6 +22,7 @@ export  const useGetResult = (results: FlightSearchResponse | undefined,
             var parsedResponse = JSON.parse(data)
             setResults(parsedResponse);
             setLoading(false);
+            setGoodRequest(true);
         }
         return data;
     }).catch((error) => {

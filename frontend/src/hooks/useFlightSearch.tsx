@@ -3,7 +3,7 @@ import { FlightSearchParams } from "../interfaces/FlightSearchParams";
 export const useFlightSearch = (params: FlightSearchParams) => {
     // Function that calls the backend API to search for flights
 
-    const backendURL:string = "http://localhost:7000/SearchFlights"
+    const backendURL = import.meta.env.VITE_FLIGHTSEARCH_URL || "";
 
     fetch(backendURL, {
         method: "POST",

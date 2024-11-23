@@ -1,14 +1,11 @@
 package com.miguelecl.backend.service;
 import com.miguelecl.backend.models.AuthTokenResponse;
-import com.miguelecl.backend.models.CitySearchResponse;
-import com.miguelecl.backend.models.FlightOffersResponse.FlightOfferResponse;
 import com.miguelecl.backend.models.SearchParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.lang.reflect.Array;
 import java.util.Objects;
 
 
@@ -79,6 +76,22 @@ public class FLightService {
     }
 
     public String searchFlights(String AuthToken, SearchParams searchParams){
+        
+        String finalURL = getFinalURL(searchParams);
+        System.out.println(finalURL);
+        String response = webClient
+                .get()
+                .uri(finalURL)
+                .header("Authorization","Bearer " + AuthToken)
+                .retrieve()
+                .bodyToMono(String.class) // What if I turn this into a string?? would it be better?
+                .block();
+
+        System.out.println(response);
+        return response;
+    }
+
+    public String getFinalURL(SearchParams searchParams){
         String originLocationCodeQuery = "?originLocationCode=" + searchParams.getDepartureAirport();
         String destinationLocationCodeQuery = "&destinationLocationCode=" + searchParams.getDestinationAirport();
         String departureDateQuery = "&departureDate=" + searchParams.getDepartureDate();
@@ -92,20 +105,8 @@ public class FLightService {
         String nonStopQuery = "&nonStop=" + searchParams.isNonStop();
         String currencyCodeQuery = "&currencyCode=" + searchParams.getCurrencyCode();
 
-        String finalURL = flightSearchURL + originLocationCodeQuery + destinationLocationCodeQuery +
-                departureDateQuery + returnDateQuery + adultsQuery + nonStopQuery + currencyCodeQuery;
-        System.out.println(finalURL);
-        System.out.println(AuthToken);
-        String response = webClient
-                .get()
-                .uri(finalURL + "&max=" + 25)
-                .header("Authorization","Bearer " + AuthToken)
-                .retrieve()
-                .bodyToMono(String.class) // What if I turn this into a string?? would it be better?
-                .block();
-
-        System.out.println(response);
-        return response;
+        return flightSearchURL + originLocationCodeQuery + destinationLocationCodeQuery +
+                departureDateQuery + returnDateQuery + adultsQuery + nonStopQuery + currencyCodeQuery + "&max=25";
     }
 
 }

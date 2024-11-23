@@ -8,7 +8,7 @@ WORKDIR /f-light-frontend
 # !!REMEMBER TO ADD THE PORT WHEN TAGGING THE IMAGE
 EXPOSE 8000:8000
 
-# Copy everything
+# Copy src directory and package.json
 COPY . .
 
 # Install dependencies

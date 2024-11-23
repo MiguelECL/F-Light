@@ -8,6 +8,17 @@ public class SearchParams {
     private String returnDate;
     private int adults;
     private boolean nonStop;
+
+    public SearchParams(String departureAirport, String destinationAirport, String departureDate, String returnDate, int adults, boolean nonStop, String currencyCode) {
+        this.departureAirport = departureAirport;
+        this.destinationAirport = destinationAirport;
+        this.departureDate = departureDate;
+        this.returnDate = returnDate;
+        this.adults = adults;
+        this.nonStop = nonStop;
+        this.currencyCode = currencyCode;
+    }
+
     private String currencyCode;
 
     public String getCurrencyCode() {
