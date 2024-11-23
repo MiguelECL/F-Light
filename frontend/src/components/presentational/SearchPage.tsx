@@ -4,10 +4,8 @@ import { ChangeEvent, SyntheticEvent, useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useNavigate } from "react-router-dom";
-import { useFlightSearch } from "../../Hooks/useFlightSearch";
 import { ACSearchResult } from "../../interfaces/ACSearchResult";
 import { handleAutocomplete } from "../containers/handleAutocomplete";
-import { GetResult } from "../containers/getResult";
 
 const SearchPage = () => {
     const [departureDate, setDepartureDate] = useState<Dayjs | null>(dayjs());
@@ -53,14 +51,12 @@ const SearchPage = () => {
             destinationAirport: arrivalAirport?.iataCode,
             departureDate: dayjs(departureDate).format("YYYY-MM-DD"),
             returnDate: returnDateString, 
-            numAdults: numAdults,
+            adults: numAdults,
             nonStop: checked,
             currencyCode: currency
         };
 
-        useFlightSearch(params);
-        var response = GetResult();
-        navigate("/results", {state: response});
+        navigate("/results", {state: params});
     }
 
 

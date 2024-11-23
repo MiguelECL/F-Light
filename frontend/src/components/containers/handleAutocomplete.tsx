@@ -7,7 +7,7 @@ export const handleAutocomplete = (keyword: string, flag: number,
 
     if (flag == 0) {
         setInputDepartureAirport(keyword);
-    } else {
+    } else if (flag == 1){
         setInputArrivalAirport(keyword);
     }
 

@@ -3,7 +3,7 @@ export interface FlightSearchParams{
     destinationAirport: string | null | undefined, 
     departureDate: string,
     returnDate: string,
-    numAdults: number,
+    adults: number,
     nonStop: Boolean,
     currencyCode: String,
 }

@@ -27,11 +27,11 @@ public class FLightService {
     @Value("${AMADEUS_AIRPORT_CITY_SEARCH_URL}")
     private String airportCitySearchURL;
 
-    @Value("$AMADEUS_FLIGHT_SEARCH_URL")
+    @Value("${AMADEUS_FLIGHT_SEARCH_URL}")
     private String flightSearchURL;
 
     @Autowired
-    private WebClient.Builder webClientBuilder;
+    private WebClient webClient;
 
     /*
         Before making our API Call, we need to get our access token. To retrieve this token, we must send a POST
@@ -39,7 +39,7 @@ public class FLightService {
         `{client_secret}` with our respective key and secret.
      */
     public String getAuthToken(){
-        AuthTokenResponse tokenResponse = webClientBuilder.build()
+        AuthTokenResponse tokenResponse = webClient
                 .post()
                 .uri(authURL)
                 .header("Content-Type","application/x-www-form-urlencoded")
@@ -69,7 +69,7 @@ public class FLightService {
         String keywordQuery = "&keyword=";
 
         //Return a value in the form of CitySearchResponse
-        return webClientBuilder.build()
+        return webClient
                 .get()
                 .uri(airportCitySearchURL + subTypeQuery + keywordQuery + keyWord + "&view=LIGHT")
                 .header("Authorization","Bearer " + AuthToken)
@@ -79,8 +79,8 @@ public class FLightService {
     }
 
     public String searchFlights(String AuthToken, SearchParams searchParams){
-        String originLocationCodeQuery = "?OriginLocationCode=" + searchParams.getDepartureAirport();
-        String destinationLocationCodeQuery = "&destinationLocationCode=" + searchParams.getArrivalAirport();
+        String originLocationCodeQuery = "?originLocationCode=" + searchParams.getDepartureAirport();
+        String destinationLocationCodeQuery = "&destinationLocationCode=" + searchParams.getDestinationAirport();
         String departureDateQuery = "&departureDate=" + searchParams.getDepartureDate();
         String returnDateQuery;
         if (!Objects.equals(searchParams.getReturnDate(), "")){
@@ -90,14 +90,15 @@ public class FLightService {
         }
         String adultsQuery = "&adults=" + searchParams.getAdults();
         String nonStopQuery = "&nonStop=" + searchParams.isNonStop();
-        String currencyCodeQuery = "&CurrencyCode=" + searchParams.getCurrencyCode();
+        String currencyCodeQuery = "&currencyCode=" + searchParams.getCurrencyCode();
 
         String finalURL = flightSearchURL + originLocationCodeQuery + destinationLocationCodeQuery +
                 departureDateQuery + returnDateQuery + adultsQuery + nonStopQuery + currencyCodeQuery;
-
-        String response = webClientBuilder.build()
+        System.out.println(finalURL);
+        System.out.println(AuthToken);
+        String response = webClient
                 .get()
-                .uri(finalURL)
+                .uri(finalURL + "&max=" + 25)
                 .header("Authorization","Bearer " + AuthToken)
                 .retrieve()
                 .bodyToMono(String.class) // What if I turn this into a string?? would it be better?

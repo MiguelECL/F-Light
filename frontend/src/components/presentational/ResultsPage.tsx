@@ -1,31 +1,35 @@
-import { Box, Button, Container, Stack } from "@mui/material";
+import { Button, Container, Stack } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
-import { sampleResponse } from "../../tests/SampleResponse";
 import FlightOffer from "../../interfaces/FlightOffer";
 import FlightSearchResponse from "../../interfaces/FlightSearchResponse";
 import { OfferParser } from "../containers/OfferParser";
 import FlightOfferResult from "./FlightOfferResult";
 import OneWayFlightOfferResult from "./OneWayFlightOfferResult";
 import ParsedOffer from "../../interfaces/ParsedOffer";
-import { useRef, useState } from "react";
-import { GetResult } from "../containers/getResult";
+import { useState } from "react";
+import { sampleResponse } from "../../tests/SampleResponse";
+import { useGetResult } from "../../Hooks/useGetResult";
 
 const ResultsPage = ({response}:{response?:string}) => {
 
     const [loading, setLoading] = useState(true);
-    const location = useLocation();
+    const [results, setResults] = useState<FlightSearchResponse>()
+
+    useGetResult(results, setResults, setLoading);
 
     var parsedResponse:FlightSearchResponse;
     // If no response is given, parse the sample response to allow for testing, otherwise parse the provided response
 
-    if(!response){
-        const state = location.state;
-        console.log(location.state);
-        parsedResponse = JSON.parse(state);
-        setLoading(false)
-    } else {
+    if(response){
         parsedResponse = JSON.parse(response);
         setLoading(false)
+    } else {
+        parsedResponse = JSON.parse(sampleResponse);
+    }
+
+    if(results != undefined){
+        parsedResponse = results;
+        console.log(parsedResponse);
     }
 
     // Function that parses the response
@@ -53,6 +57,9 @@ const ResultsPage = ({response}:{response?:string}) => {
             </Stack>
         </Container>
     );
+    else return (
+        <h1>Loading</h1>
+    )
 }
 
 export default ResultsPage;

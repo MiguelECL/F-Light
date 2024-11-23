@@ -49,7 +49,7 @@ export const OfferParser = (offer: FlightOffer, dictionaries: Dictionary) => {
     const fees = offer.price.fees;
 
     // Obtain operating airline
-    const carrierCode = offer.itineraries[0].segments[0].operating.carrierCode;
+    const carrierCode = offer.itineraries[0].segments[0].operating?.carrierCode;
     const carrierName = dictionaries.carriers[carrierCode]
     const carrierString = `${carrierName} (${carrierCode})`
 
