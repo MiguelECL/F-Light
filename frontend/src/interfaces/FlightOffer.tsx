@@ -1,5 +1,4 @@
-import Segment from "./Segment"
-
+import Itinerary from "./Itinerary"
 export default interface FlightOffer {
     type: string,
     id: string,
@@ -9,12 +8,7 @@ export default interface FlightOffer {
     oneWay: boolean,
     lastTicketingDate: string,
     numberOfBookableSeats: number,
-    itineraries: [
-        {
-            duration:string,
-            segments: Segment[]
-        }
-    ]
+    itineraries: Itinerary[],
     price: {
         currency: string, 
         total: string,

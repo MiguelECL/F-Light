@@ -12,7 +12,11 @@ const DetailsPage = () => {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const info = location.state.info;
+    if(location){
+        var info = location.state.info;
+    } 
+      
+    
     let offer: ParsedOffer;
     let dictionaries: Dictionary;
     if (info !== null){    // If state is not null, we assign this state to offer.

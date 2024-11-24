@@ -18,9 +18,9 @@ export const OfferParser = (offer: FlightOffer, dictionaries: Dictionary) => {
     // Get the number of stops and their duration
     let numStops = 0;
     let stopsString = "";
-    let stops = [];
+    // let stops = [];
 
-    for (let segment of offer.itineraries[0].segments) {
+    for (let _segment of offer.itineraries[0].segments) {
         numStops++;
     }
 
@@ -53,43 +53,52 @@ export const OfferParser = (offer: FlightOffer, dictionaries: Dictionary) => {
 
     // Obtain segments
     const segments = offer.itineraries[0].segments;
-
+    
+    //Variables for return Flight
+    var returnLastSegment = 0;
+    var returnDepartureLocalTime = "";
+    var returnArrivalLocalTime = "";
+    var returnTimeDuration = "";
+    var returnDepartureLocalTime = "";
+    var returnArrivalLocalTime = "";
+    var returnDepartureAirport = "";
+    var returnArrivalAirport = "";
+    var returnCarrierString = "";
+    var returnNumStops = 0;
+    var returnStopsString = "";
     // Return Flight Parsing
     if (offer.itineraries.length > 1) {
 
-        let returnLastSegment: number;
-        let returnDepartureLocalTime: string
-        let returnArrivalLocalTime: string
-        let returnTimeDuration: string
-        //Format Time
-        returnLastSegment = offer.itineraries[1].segments.length;
-        returnDepartureLocalTime = dayjs(offer.itineraries[1].segments[0].departure.at).format("HH:mm");
-        returnArrivalLocalTime = dayjs(offer.itineraries[1].segments[returnLastSegment - 1].arrival.at).format("HH:mm");
-        returnTimeDuration = dayjs.duration(offer.itineraries[1].duration).format("HH[h] mm[m]");
+        if (offer.itineraries[1] != undefined) {
+            //Format Time
+            returnLastSegment = offer.itineraries[1].segments.length;
+            returnDepartureLocalTime = dayjs(offer.itineraries[1].segments[0].departure.at).format("HH:mm");
+            returnArrivalLocalTime = dayjs(offer.itineraries[1].segments[returnLastSegment - 1].arrival.at).format("HH:mm");
+            returnTimeDuration = dayjs.duration(offer.itineraries[1].duration).format("HH[h] mm[m]");
 
-        // get number of stops in return flight
-        var returnNumStops = 0;
-        var returnStopsString = "";
-        for (let segment of offer.itineraries[1].segments) {
-            returnNumStops++;
+            // get number of stops in return flight
+            var returnNumStops = 0;
+            var returnStopsString = "";
+            for (let _segment of offer.itineraries[1].segments) {
+                returnNumStops++;
+            }
+
+            returnNumStops -= 1;
+            // Return flight
+            if (returnNumStops == 0) returnStopsString = "(Nonstop)";
+            else if (returnNumStops > 1) returnStopsString = `(${returnNumStops} Stops)`
+            else returnStopsString = `(${returnNumStops} Stop)`
+
+            var returnDepartureAirport = offer.itineraries[1].segments[0].departure.iataCode;
+            var returnArrivalAirport = offer.itineraries[1].segments[returnLastSegment - 1].arrival.iataCode;
+
+
+            // Obtain operating airline
+            const returnCarrierCode = offer.itineraries[1].segments[0].operating?.carrierCode;
+            const returnCarrierName = dictionaries.carriers[carrierCode]
+            var returnCarrierString = `${returnCarrierName} (${returnCarrierCode})`
         }
-
-        returnNumStops -= 1;
-        // Return flight
-        if (returnNumStops == 0) returnStopsString = "(Nonstop)";
-        else if (returnNumStops > 1) returnStopsString = `(${returnNumStops} Stops)`
-        else returnStopsString = `(${returnNumStops} Stop)`
-
-        var returnDepartureAirport = offer.itineraries[1].segments[0].departure.iataCode;
-        var returnArrivalAirport = offer.itineraries[1].segments[returnLastSegment - 1].arrival.iataCode;
-
-
-        // Obtain operating airline
-        const returnCarrierCode = offer.itineraries[1].segments[0].operating?.carrierCode;
-        const returnCarrierName = dictionaries.carriers[carrierCode]
-        var returnCarrierString = `${carrierName} (${carrierCode})`
     }
-
 
     const data: ParsedOffer = {
         // SHOULD really refactor this into objects but due to time most likely wont!

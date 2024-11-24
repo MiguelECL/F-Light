@@ -11,7 +11,7 @@ import { sampleResponse } from "../../tests/SampleResponse";
 import { useGetResult } from "../../Hooks/useGetResult";
 import { handleSort } from "../containers/handleSort";
 
-const ResultsPage = ({response}:{response?:string}) => {
+const ResultsPage = () => {
 
     const [loading, setLoading] = useState(true);
     const [parsedResponse, setParsedResponse] = useState<FlightSearchResponse>()
