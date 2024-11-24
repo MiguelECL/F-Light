@@ -6,6 +6,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useNavigate } from "react-router-dom";
 import { ACSearchResult } from "../../interfaces/ACSearchResult";
 import { handleAutocomplete } from "../containers/handleAutocomplete";
+import { useFlightSearch } from "../../Hooks/useFlightSearch";
 
 const SearchPage = () => {
     const [departureDate, setDepartureDate] = useState<Dayjs | null>(dayjs());
@@ -56,6 +57,7 @@ const SearchPage = () => {
             currencyCode: currency
         };
 
+        useFlightSearch(params);
         navigate("/results", {state: params});
     }
 

@@ -11,7 +11,7 @@ export const handleAutocomplete = (keyword: string, flag: number,
         setInputArrivalAirport(keyword);
     }
 
-    const backendURL = "http://localhost:7000/SearchAirportCity/" + [keyword];
+    const backendURL = import.meta.env.VITE_AIRPORTCITYSEARCH_URL + [keyword];
     fetch(backendURL, {
         method: "GET",
         headers: {

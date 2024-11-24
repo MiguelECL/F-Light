@@ -78,17 +78,14 @@ public class FLightService {
     public String searchFlights(String AuthToken, SearchParams searchParams){
         
         String finalURL = getFinalURL(searchParams);
-        System.out.println(finalURL);
-        String response = webClient
+        return webClient
                 .get()
-                .uri(finalURL)
-                .header("Authorization","Bearer " + AuthToken)
+                .uri(flightSearchURL + finalURL)
+                .header("Authorization", "Bearer " + AuthToken)
                 .retrieve()
                 .bodyToMono(String.class) // What if I turn this into a string?? would it be better?
                 .block();
 
-        System.out.println(response);
-        return response;
     }
 
     public String getFinalURL(SearchParams searchParams){
@@ -105,8 +102,8 @@ public class FLightService {
         String nonStopQuery = "&nonStop=" + searchParams.isNonStop();
         String currencyCodeQuery = "&currencyCode=" + searchParams.getCurrencyCode();
 
-        return flightSearchURL + originLocationCodeQuery + destinationLocationCodeQuery +
-                departureDateQuery + returnDateQuery + adultsQuery + nonStopQuery + currencyCodeQuery + "&max=25";
+        return originLocationCodeQuery + destinationLocationCodeQuery +
+                departureDateQuery + returnDateQuery + adultsQuery + nonStopQuery + currencyCodeQuery;
     }
 
 }

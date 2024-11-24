@@ -1,4 +1,5 @@
 import Segment from "./Segment"
+import SegmentDetails from "./SegmentDetails"
 
 export default interface ParsedOffer {
     departureAirport: string,
@@ -16,5 +17,6 @@ export default interface ParsedOffer {
     fees: [{}],
     numAdults: number,
     perTravelerPrice: string,
+    fareDetailsBySegment: SegmentDetails[]
     segments: Segment[]
 }

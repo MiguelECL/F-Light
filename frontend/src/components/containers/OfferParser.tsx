@@ -45,6 +45,7 @@ export const OfferParser = (offer: FlightOffer, dictionaries: Dictionary) => {
     const currency = offer.price.currency;
     const totalPrice = offer.price.total + " " + currency;
     const perTravelerPrice = offer.travelerPricings[0].price.total + " " + currency;
+    const fareDetailsBySegment = offer.travelerPricings[0].fareDetailsBySegment;
     const basePrice = offer.price.base;
     const fees = offer.price.fees;
 
@@ -72,6 +73,7 @@ export const OfferParser = (offer: FlightOffer, dictionaries: Dictionary) => {
         fees: fees,
         numAdults: numAdults,
         perTravelerPrice: perTravelerPrice,
+        fareDetailsBySegment: fareDetailsBySegment,
         segments: segments
     }
 
