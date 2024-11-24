@@ -9,6 +9,7 @@ import ParsedOffer from "../../interfaces/ParsedOffer";
 import { useEffect, useState } from "react";
 import { sampleResponse } from "../../tests/SampleResponse";
 import { useGetResult } from "../../Hooks/useGetResult";
+import { handleSort } from "../containers/handleSort";
 
 const ResultsPage = ({response}:{response?:string}) => {
 
@@ -42,15 +43,16 @@ const ResultsPage = ({response}:{response?:string}) => {
     if (!loading && parsedResponse != undefined) return (
         <Container maxWidth="lg" sx={{ marginTop: 20, overflow: "scroll" }}>
             <Button onClick={() => navigate("/")} variant="contained" fullWidth> &lt; Return to Search</Button>
+            Sort: <Button onClick={()=>{handleSort(0)}}>Duration</Button><Button onClick={()=>{handleSort(1)}}>Price</Button>
             <Stack>
                 {parsedResponse?.data.map((offer: FlightOffer, index: number) => {
                     const parsedOffer = OfferParser(offer, parsedResponse.dictionaries)
                     if (parsedOffer.oneWay == true)
                         return (
-                            <FlightOfferResult key={index} offer={parsedOffer} handleClick={handleClick} />
+                            <OneWayFlightOfferResult key={index} offer={parsedOffer} handleClick={handleClick} />
                         )
                     else return (
-                        <OneWayFlightOfferResult key={index} offer={parsedOffer} handleClick={handleClick} />
+                        <FlightOfferResult key={index} offer={parsedOffer} handleClick={handleClick} />
                     )
                 })}
             </Stack>

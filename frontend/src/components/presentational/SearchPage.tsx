@@ -14,6 +14,11 @@ const SearchPage = () => {
     const [currency, setCurrency] = useState("USD");
     const [numAdults, setNumAdults] = useState<number>(1);
     const [checked, setChecked] = useState(false);
+    const [options, setOptions] = useState<readonly ACSearchResult[]>([]);
+    const [inputDepartureAirport, setInputDepartureAirport] = useState("");
+    const [inputArrivalAirport, setInputArrivalAirport] = useState("");
+    const [departureAirport, setDepartureAirport] = useState<ACSearchResult | null>(); // How to initialize an empty object?
+    const [arrivalAirport, setArrivalAirport] = useState<ACSearchResult | null>();
 
     const navigate = useNavigate();
 
@@ -21,7 +26,7 @@ const SearchPage = () => {
         setCurrency(event.target.value as string);
     }
 
-    const handleSlider = (event: Event, newValue: number | number[]) => {
+    const handleSlider = (newValue: number | number[]) => {
         setNumAdults(newValue as number);
     }
 
@@ -62,11 +67,6 @@ const SearchPage = () => {
     }
 
 
-    const [options, setOptions] = useState<readonly ACSearchResult[]>([]);
-    const [inputDepartureAirport, setInputDepartureAirport] = useState("");
-    const [inputArrivalAirport, setInputArrivalAirport] = useState("");
-    const [departureAirport, setDepartureAirport] = useState<ACSearchResult | null>(); // How to initialize an empty object?
-    const [arrivalAirport, setArrivalAirport] = useState<ACSearchResult | null>();
 
     const handleClose = () => {
         setOptions([]);
