@@ -7,7 +7,7 @@ const PriceBreakdown = ({offer}: {offer:ParsedOffer}) => {
         <Container>
             <h2>Price Breakdown</h2>
             <h3>{`Base: ${offer.basePrice}`}</h3>
-            <div><h3>Fees</h3> 
+            <div><h3>Fees: </h3> 
                 {offer.fees.map((fee:any, index:number) => { 
                     if(fee.amount != 0){
                         return (

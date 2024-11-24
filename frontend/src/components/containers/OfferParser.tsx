@@ -8,9 +8,9 @@ export const OfferParser = (offer: FlightOffer, dictionaries: Dictionary) => {
     // Format time
     dayjs.extend(duration);
     const lastSegment = offer.itineraries[0].segments.length;
-    const departureLocalTime = dayjs(offer.itineraries[0].segments[0].departure.at).format("HH:mm:ss");
-    const arrivalLocalTime = dayjs(offer.itineraries[0].segments[lastSegment-1].arrival.at).format("HH:mm:ss");
-    const timeDuration = dayjs.duration(offer.itineraries[0].duration).format("HH:mm:ss");
+    const departureLocalTime = dayjs(offer.itineraries[0].segments[0].departure.at).format("HH:mm");
+    const arrivalLocalTime = dayjs(offer.itineraries[0].segments[lastSegment-1].arrival.at).format("HH:mm");
+    const timeDuration = dayjs.duration(offer.itineraries[0].duration).format("HH:mm");
 
     // Get if the offer is one way
     const oneWay = offer.oneWay;

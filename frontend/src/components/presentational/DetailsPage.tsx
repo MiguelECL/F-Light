@@ -12,11 +12,14 @@ const DetailsPage = () => {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const { state } = location || {}; // ADD FAIL SAFE
+    const info = location.state.info;
     let offer: ParsedOffer;
     let dictionaries: Dictionary;
-    if (state !== null){    // If state is not null, we assign this state to offer.
-        offer = state.parsedOffer 
+    if (info !== null){    // If state is not null, we assign this state to offer.
+        offer = info.offer
+        dictionaries = info.dicts
+        console.log(offer);
+        console.log(dictionaries);
     } else {    // Else, fall back to sample response.
         let parsedResponse = JSON.parse(sampleResponse);
         offer = OfferParser(parsedResponse.data[0], parsedResponse.dictionaries);

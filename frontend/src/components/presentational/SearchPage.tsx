@@ -10,7 +10,7 @@ import { useFlightSearch } from "../../Hooks/useFlightSearch";
 
 const SearchPage = () => {
     const [departureDate, setDepartureDate] = useState<Dayjs | null>(dayjs());
-    const [returnDate, setReturnDate] = useState<Dayjs | null>(dayjs());
+    const [returnDate, setReturnDate] = useState<Dayjs | null>();
     const [currency, setCurrency] = useState("USD");
     const [numAdults, setNumAdults] = useState<number>(1);
     const [checked, setChecked] = useState(false);
@@ -41,7 +41,7 @@ const SearchPage = () => {
     const handleSubmit = (e: SyntheticEvent) => {
         e.preventDefault();
 
-        if (dayjs(returnDate).isValid() == false){
+        if (returnDate == null){
             var returnDateString = "";
         } else {
             var returnDateString = dayjs(returnDate).format("YYYY-MM-DD")
@@ -92,8 +92,8 @@ const SearchPage = () => {
                             onInputChange={(event, newInputValue) => handleAutocomplete(newInputValue, 1, setInputDepartureAirport, setInputArrivalAirport, setOptions)} 
                             renderInput={(P) => <TextField {...P} required label="Arrival Airport" />}>
                         </Autocomplete>
-                        <DatePicker defaultValue={dayjs()} minDate={dayjs()} value={departureDate} onChange={(departureDate) => setDepartureDate(departureDate)} />
-                        <DatePicker disablePast minDate={minDate} onChange={(returnDate) => setReturnDate(returnDate)} />
+                        <DatePicker minDate={dayjs()} value={departureDate} onChange={(departureDate) => setDepartureDate(departureDate)} />
+                        <DatePicker disablePast minDate={minDate} value={returnDate} onChange={(returnDate) => setReturnDate(returnDate)} />
                         <Grid container spacing={2} sx={{ alignItems: 'center' }}>
                             <Grid size={4}>
                                 <Typography>Number of Adults: </Typography>

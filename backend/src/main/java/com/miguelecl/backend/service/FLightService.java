@@ -93,6 +93,7 @@ public class FLightService {
         String destinationLocationCodeQuery = "&destinationLocationCode=" + searchParams.getDestinationAirport();
         String departureDateQuery = "&departureDate=" + searchParams.getDepartureDate();
         String returnDateQuery;
+        System.out.println(searchParams.getReturnDate());
         if (!Objects.equals(searchParams.getReturnDate(), "")){
             returnDateQuery = "&returnDate=" + searchParams.getReturnDate();
         } else {
@@ -103,7 +104,7 @@ public class FLightService {
         String currencyCodeQuery = "&currencyCode=" + searchParams.getCurrencyCode();
 
         return originLocationCodeQuery + destinationLocationCodeQuery +
-                departureDateQuery + returnDateQuery + adultsQuery + nonStopQuery + currencyCodeQuery;
+                departureDateQuery + returnDateQuery + adultsQuery + nonStopQuery + currencyCodeQuery + "&max=50";
     }
 
 }

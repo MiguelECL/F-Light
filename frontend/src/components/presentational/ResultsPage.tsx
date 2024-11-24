@@ -14,22 +14,29 @@ const ResultsPage = ({response}:{response?:string}) => {
 
     const [loading, setLoading] = useState(true);
     const [parsedResponse, setParsedResponse] = useState<FlightSearchResponse>()
-    const [goodRequest, setGoodRequest] = useState(false);
+    const [goodRequest, setGoodRequest] = useState<null | boolean>(null);
 
     const navigate = useNavigate();    // React Router navigation
 
-    useGetResult(parsedResponse, setParsedResponse, setLoading, setGoodRequest);
 
     useEffect(() => {
-        if (parsedResponse != undefined) {
+        useGetResult(parsedResponse, setParsedResponse, setLoading, setGoodRequest);
+        if (goodRequest == true) {
             setLoading(false);
         } else {
             setParsedResponse(JSON.parse(sampleResponse));
+            setLoading(false);
         }
-    },[parsedResponse])
+    },[goodRequest])
 
     const handleClick = (parsedOffer: ParsedOffer) => {
-        navigate("/details", { state: { parsedOffer } });   // use react router to route to this page while providing state.
+        const dicts = parsedResponse?.dictionaries
+        const offer = parsedOffer
+
+
+        const info = {dicts: dicts, offer: offer}
+        console.log(info);
+        navigate("/details", { state: { info } });   // use react router to route to this page while providing state.
     }
 
     if (!loading && parsedResponse != undefined) return (

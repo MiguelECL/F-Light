@@ -38,7 +38,6 @@ public class FLightController {
 
     @GetMapping("/GetResult")
     public String GetResult(){
-        System.out.println(cachedResponse);
         return cachedResponse;
     }
 

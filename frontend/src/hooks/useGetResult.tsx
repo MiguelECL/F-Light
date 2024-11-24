@@ -4,7 +4,7 @@ import FlightSearchResponse from "../interfaces/FlightSearchResponse";
 export  const useGetResult = (results: FlightSearchResponse | undefined, 
     setResults: React.Dispatch<React.SetStateAction<FlightSearchResponse | undefined>>,
     setLoading: React.Dispatch<React.SetStateAction<boolean>>,
-    setGoodRequest: React.Dispatch<React.SetStateAction<boolean>>) => {
+    setGoodRequest: React.Dispatch<React.SetStateAction<null | boolean>>) => {
 
     const searchResultURL = import.meta.env.VITE_GETRESULT_URL;
 
@@ -21,8 +21,9 @@ export  const useGetResult = (results: FlightSearchResponse | undefined,
         if(data != undefined ){
             var parsedResponse = JSON.parse(data)
             setResults(parsedResponse);
-            setLoading(false);
             setGoodRequest(true);
+        } else {
+            setGoodRequest(false);
         }
         return data;
     }).catch((error) => {
