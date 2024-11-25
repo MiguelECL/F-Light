@@ -1,9 +1,8 @@
 import React from "react";
 import FlightSearchResponse from "../interfaces/FlightSearchResponse";
 
-export  const useGetResult = (results: FlightSearchResponse | undefined, 
+export  const useGetResult = (
     setResults: React.Dispatch<React.SetStateAction<FlightSearchResponse | undefined>>,
-    setLoading: React.Dispatch<React.SetStateAction<boolean>>,
     setGoodRequest: React.Dispatch<React.SetStateAction<null | boolean>>) => {
 
     const searchResultURL = import.meta.env.VITE_GETRESULT_URL;

@@ -24,7 +24,7 @@ const ResultsPage = () => {
 
 
     useEffect(() => {
-        useGetResult(parsedResponse, setParsedResponse, setLoading, setGoodRequest);
+        useGetResult( setParsedResponse, setGoodRequest);
         if (goodRequest == true) {
             setLoading(false);
             console.log(parsedResponse);
@@ -45,7 +45,7 @@ const ResultsPage = () => {
     }
 
     console.log("Re-render")
-    return (
+    if(!loading)return (
         <Container maxWidth="lg" sx={{ marginTop: 20, overflow: "scroll" }}>
             <Button onClick={() => navigate("/")} variant="contained" fullWidth> &lt; Return to Search</Button>
             Sort: <Button onClick={()=>{ handleSort(parsedResponse, setParsedResponse, 0, sortObject)}}>Duration</Button><Button onClick={()=>{handleSort(parsedResponse, setParsedResponse, 1,sortObject)}}>Price</Button>

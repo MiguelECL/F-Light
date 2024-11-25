@@ -1,6 +1,6 @@
 import FlightSearchResponse from "../../interfaces/FlightSearchResponse"
 import SortObject from "../../interfaces/SortObject"
-import dayjs, { duration } from "dayjs";
+import dayjs from "dayjs";
 
 export const handleSort = (parsedResponse: FlightSearchResponse | undefined, setParsedResponse: React.Dispatch<React.SetStateAction<FlightSearchResponse | undefined>>, flag: number, sortObject: SortObject) => {
 

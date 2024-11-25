@@ -14,8 +14,8 @@ class FLightServiceTest {
                 "24-12-2024", 4, false, "MXN");
 
         // Check that final URL is correct
-        assertEquals("null?originLocationCode=NYC&destinationLocationCode=HMO&departureDate=23-11-2023" +
-                "&returnDate=24-12-2024&adults=4&nonStop=false&currencyCode=MXN&max=25", flightService.getFinalURL(params));
+        assertEquals("?originLocationCode=NYC&destinationLocationCode=HMO&departureDate=23-11-2023" +
+                "&returnDate=24-12-2024&adults=4&nonStop=false&currencyCode=MXN&max=50", flightService.getFinalURL(params));
 
     }
 
@@ -26,8 +26,8 @@ class FLightServiceTest {
                 "", 4, false, "MXN");
 
         // Check that final URL is correct if return date is left blank
-        assertEquals("null?originLocationCode=NYC&destinationLocationCode=HMO&departureDate=23-11-2023" +
-                "&adults=4&nonStop=false&currencyCode=MXN&max=25",flightService.getFinalURL(params));
+        assertEquals("?originLocationCode=NYC&destinationLocationCode=HMO&departureDate=23-11-2023" +
+                "&adults=4&nonStop=false&currencyCode=MXN&max=50",flightService.getFinalURL(params));
     }
 
 }

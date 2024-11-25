@@ -28,6 +28,7 @@ dist-ssr
 *.sln
 *.sw?
 
+.env
 # ------------------------- BACKEND -----------------------#
 HELP.md
 backend/build/**/

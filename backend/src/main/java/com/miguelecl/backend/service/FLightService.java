@@ -53,7 +53,7 @@ public class FLightService {
         // Call the API with the authorization header with the value Bearer String concatenated with the token requested
         /*
         In the form of: https://APIURL?QueryParam=value
-        Headers: Authorization: Bearer Token"
+        Headers: Authorization: Bearer Token
 
         required Parameters for Airport & city search are:
         subType = array[string]

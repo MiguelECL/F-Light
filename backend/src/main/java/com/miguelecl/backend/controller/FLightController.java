@@ -1,23 +1,20 @@
 package com.miguelecl.backend.controller;
-
-import com.miguelecl.backend.models.CitySearchResponse;
-import com.miguelecl.backend.models.FlightOffersResponse.FlightOfferResponse;
 import com.miguelecl.backend.models.SearchParams;
 import com.miguelecl.backend.service.FLightService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.*;
-
-
 
 @RestController
 @RequestMapping("/")
 @CrossOrigin("http://localhost:8000")
+
 public class FLightController {
 
     private String cachedResponse;
     private final FLightService flightService;
 
-    @Autowired
     public FLightController(FLightService flightService) {
         this.flightService = flightService;
     }

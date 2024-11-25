@@ -1,10 +1,23 @@
 services:
   frontend:
+    environment:
+      - VITE_AIRPORTCITYSEARCH_URL = ${VITE_AIRPORTCITYSEARCH_URL}
+      - VITE_GETRESULT_URL = ${VITE_GETRESULT_URL}
+      - VITE_FLIGHTSEARCH_URL = ${VITE_FLIGHTSEARCH_URL}
     build: ./frontend
     ports: 
       - "8000:8000"
 
   backend:
+    environment: 
+      - AMADEUS_AIRPORT_CITY_SEARCH_URL = ${AMADEUS_AIRPORT_CITY_SEARCH_URL}
+      - AMADEUS_AUTH_URL = ${AMADEUS_AUTH_URL}
+      - AMADEUS_FLIGHT_SEARCH_URL = ${AMADEUS_FLIGHT_SEARCH_URL}
+      - AMADEUS_API_KEY = ${AMADEUS_API_KEY}
+      - AMADEUS_API_SECRET = ${AMADEUS_API_SECRET}
     build: ./backend
     ports: 
       - "7000:7000"
+    command: ["printenv"]
+    env_file:
+      - .env
