@@ -10,6 +10,14 @@ F-Light is a multi-container application that tracks useful flight information, 
 
 - In order to be able to run the program, you must first install [Docker Desktop](https://www.docker.com/), software that allows the building and deployment of containerized applications.
 
+### Cloning Repository
+
+To run the application, you must first clone the repository to your local machine in order to run the commands in the next section.
+
+### Modifying Root .env File
+
+In order to get the app to make API calls, you must provide it with 
+
 ### Commands
 
 #### Change Directory
