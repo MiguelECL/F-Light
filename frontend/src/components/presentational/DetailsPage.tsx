@@ -22,8 +22,6 @@ const DetailsPage = () => {
     if (info !== null){    // If state is not null, we assign this state to offer.
         offer = info.offer
         dictionaries = info.dicts
-        console.log(offer);
-        console.log(dictionaries);
     } else {    // Else, fall back to sample response.
         let parsedResponse = JSON.parse(sampleResponse);
         offer = OfferParser(parsedResponse.data[0], parsedResponse.dictionaries);
@@ -37,7 +35,7 @@ const DetailsPage = () => {
                     {offer.segments.map((segment:Segment, index:number) => (
                         <SegmentComponent key={index} segment={segment} offer={offer} dictionaries={dictionaries} index={index}/>
                     ))}
-                    {(offer.returnSegments &&
+                    {((offer.returnSegments.length != 0 ) &&
                     <div>
                         <h1 style={{color: "black"}}>Return Flight</h1>
                         {offer.returnSegments.map((segment: Segment, index: number) => (

@@ -76,25 +76,25 @@ const SearchPage = () => {
     const minDate = dayjs(departureDate?.format("YYYY-MM-DD"));
 
     return (
-        <Container maxWidth="sm" sx={{ marginTop: 20 }}>
+        <Container maxWidth="sm" sx={{ marginTop: 15 }}>
             
                 <form onSubmit={(e) => { handleSubmit(e) }}>
-                    <Stack spacing={1}>
+                    <Stack spacing={2}>
                         <h1> Search Flights</h1>
-                        <Autocomplete clearOnEscape onClose={handleClose} isOptionEqualToValue={(option, value) => option.detailedName === value.name}
+                        <Autocomplete noOptionsText="Type airport or city name" autoComplete={true} clearOnEscape onClose={handleClose} isOptionEqualToValue={(option, value) => option.detailedName === value.name}
                             getOptionLabel={(option: ACSearchResult) => option.name} options={options} value={departureAirport}
                             onChange={(_event: any, newValue: ACSearchResult | null) => setDepartureAirport(newValue)} inputValue={inputDepartureAirport}
                             onInputChange={(_event, newInputValue) => handleAutocomplete(newInputValue, 0, setInputDepartureAirport, setInputArrivalAirport, setOptions)}
                             renderInput={(P) => <TextField {...P} required label="Departure Airport" />} >
                         </Autocomplete>
-                        <Autocomplete clearOnEscape onClose={handleClose} isOptionEqualToValue={(option, value) => option.detailedName === value.name}
+                        <Autocomplete noOptionsText="Type airport or city name" autoComplete={true} clearOnEscape onClose={handleClose} isOptionEqualToValue={(option, value) => option.detailedName === value.name}
                             getOptionLabel={(option: ACSearchResult) => option.name} options={options} value={arrivalAirport}
                             onChange={(_event: any, newValue: ACSearchResult | null) => setArrivalAirport(newValue)} inputValue={inputArrivalAirport}
                             onInputChange={(_event, newInputValue) => handleAutocomplete(newInputValue, 1, setInputDepartureAirport, setInputArrivalAirport, setOptions)} 
                             renderInput={(P) => <TextField {...P} required label="Arrival Airport" />}>
                         </Autocomplete>
-                        <DatePicker minDate={dayjs()} value={departureDate} onChange={(departureDate) => setDepartureDate(departureDate)} />
-                        <DatePicker disablePast minDate={minDate} value={returnDate} onChange={(returnDate) => setReturnDate(returnDate)} />
+                        <DatePicker label="Departure Date" minDate={dayjs()} value={departureDate} onChange={(departureDate) => setDepartureDate(departureDate)} />
+                        <DatePicker label="Return Date" disablePast minDate={minDate} value={returnDate} onChange={(returnDate) => setReturnDate(returnDate)} />
                         <Grid container spacing={2} sx={{ alignItems: 'center' }}>
                             <Grid size={4}>
                                 <Typography>Number of Adults: </Typography>

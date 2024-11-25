@@ -4,9 +4,9 @@ import ParsedOffer from "../../interfaces/ParsedOffer";
 const FlightOfferResult = ({ offer, handleClick }: { offer: ParsedOffer, handleClick: Function }) => {
 
     if(offer.returnArrivalAirport)return (
-        <Box>
+        <Box >
             <Button fullWidth onClick={() => { handleClick(offer) }}>
-                <Stack direction="row" spacing={10}>
+                <Stack direction="row" spacing={20}>
                     <Stack>
                         <Stack direction="row" spacing={20}>
                             <Box id="Left">
@@ -52,13 +52,13 @@ const FlightOfferResult = ({ offer, handleClick }: { offer: ParsedOffer, handleC
         </Box>
     );
     else return (
-        <Box>
+        <Box >
             <Button fullWidth onClick={() => { handleClick(offer) }}>
                 <Stack direction="row" spacing={20}>
                     <Box id="Left">
                         <h2>{offer.departureLocalTime + " - " + offer.arrivalLocalTime}</h2>
                         <h3>{`${offer.departureAirport + " - " + offer.arrivalAirport}`}</h3>
-                        <h3>{offer.carrierInfo}</h3>
+                        {(offer.carrierInfo != "") && <h3>{offer?.carrierInfo}</h3>}
                     </Box>
                     <Box id="Center">
                         <h2>{offer.timeDuration + " " + offer.stopsString}</h2>

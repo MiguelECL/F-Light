@@ -63,7 +63,12 @@ export const OfferParser = (offer: FlightOffer, dictionaries: Dictionary) => {
     // Obtain operating airline
     const carrierCode = offer.itineraries[0].segments[0].operating?.carrierCode;
     const carrierName = dictionaries.carriers[carrierCode]
-    const carrierString = `${carrierName} (${carrierCode})`
+    if(carrierCode == undefined || carrierName == undefined){
+        var carrierString = "No Carrier Info";
+    } else {
+        var carrierString = `${carrierName} (${carrierCode})`
+    }
+
 
     // Obtain segments
     const segments = offer.itineraries[0].segments;

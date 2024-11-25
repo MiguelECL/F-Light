@@ -14,54 +14,60 @@ const ResultsPage = () => {
 
     const [loading, setLoading] = useState(true);
     const [parsedResponse, setParsedResponse] = useState<FlightSearchResponse>()
-    const [goodRequest, setGoodRequest] = useState<null | boolean>(null);
+    const [goodRequest, setGoodRequest] = useState<null | boolean>(false);
     const durationSort = useRef(0);
     const priceSort = useRef(0);
 
-    const sortObject = {durationSort, priceSort};
+    const sortObject = { durationSort, priceSort };
 
     const navigate = useNavigate();    // React Router navigation
 
 
     useEffect(() => {
-        useGetResult( setParsedResponse, setGoodRequest);
-        if (goodRequest == true) {
-            setLoading(false);
-            console.log(parsedResponse);
-        } else {
-            setParsedResponse(JSON.parse(sampleResponse));
-            setLoading(false);
+        const fetchData = async () => {
+            await useGetResult(setParsedResponse, setGoodRequest);
+            if (goodRequest == true) {
+                setLoading(false);
+                console.log(goodRequest)
+            } else {
+                setParsedResponse(JSON.parse(sampleResponse));
+                setLoading(false);
+                console.log("F");
+            }
         }
+        fetchData();
     },[goodRequest])
+
+    
 
     const handleClick = (parsedOffer: ParsedOffer) => {
         const dicts = parsedResponse?.dictionaries
         const offer = parsedOffer
 
 
-        const info = {dicts: dicts, offer: offer}
-        console.log(info);
+        const info = { dicts: dicts, offer: offer }
         navigate("/details", { state: { info } });   // use react router to route to this page while providing state.
     }
 
-    console.log("Re-render")
-    if(!loading)return (
-        <Container maxWidth="lg" sx={{ marginTop: 20, overflow: "scroll" }}>
+    if (!loading) return (
+        <Container maxWidth="lg" sx={{ marginTop: 20 }}>
             <Button onClick={() => navigate("/")} variant="contained" fullWidth> &lt; Return to Search</Button>
-            Sort: <Button onClick={()=>{ handleSort(parsedResponse, setParsedResponse, 0, sortObject)}}>Duration</Button><Button onClick={()=>{handleSort(parsedResponse, setParsedResponse, 1,sortObject)}}>Price</Button>
+            Sort: <Button onClick={() => { handleSort(parsedResponse, setParsedResponse, 0, sortObject) }}>Duration</Button><Button onClick={() => { handleSort(parsedResponse, setParsedResponse, 1, sortObject) }}>Price</Button>
             <Stack>
                 {parsedResponse?.data.map((offer: FlightOffer, index: number) => {
                     const parsedOffer = OfferParser(offer, parsedResponse.dictionaries)
                     return (
-                        <FlightOfferResult key={index} offer={parsedOffer} handleClick={handleClick} />
+                        <div key={index} id="flightOffer">
+                            <FlightOfferResult offer={parsedOffer} handleClick={handleClick} />
+                        </div>
                     )
                 })}
             </Stack>
         </Container>
     );
-    // else return (
-    //     <h1>Loading</h1>
-    // )
+    else return (
+        <h1>Loading</h1>
+    )
 }
 
 export default ResultsPage;

@@ -5,7 +5,6 @@ import dayjs from "dayjs";
 export const handleSort = (parsedResponse: FlightSearchResponse | undefined, setParsedResponse: React.Dispatch<React.SetStateAction<FlightSearchResponse | undefined>>, flag: number, sortObject: SortObject) => {
 
     // If flag is 0 user wants to sort by duration
-    console.log(parsedResponse);
     const { durationSort } = sortObject
     const { priceSort } = sortObject
 
@@ -15,7 +14,6 @@ export const handleSort = (parsedResponse: FlightSearchResponse | undefined, set
 
         if (flag == 0) {
             durationSort.current += 1;
-            console.log(durationSort.current);
             if (parsedResponse) {
                 if (durationSort.current == 1) {
                     sortedResponse.data = (sortedResponse.data.sort((a, b) => {

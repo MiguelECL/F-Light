@@ -6,7 +6,6 @@ import Dictionary from "../../interfaces/Dictionary";
 import dayjs from "dayjs";
 
 const SegmentComponent = ({ segment, index, offer, dictionaries }: { segment:Segment,  index: number, offer:ParsedOffer, dictionaries:Dictionary}) => {
-console.log(dictionaries);
     return (
         <Box>
             <Grid>

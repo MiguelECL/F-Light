@@ -24,3 +24,8 @@ a, a:visited{
 .DetailsPage {
   color: rgb(25, 131, 223)
 }
+
+#flightOffer:hover{
+  transform: scale(1.05);
+  background-color: whitesmoke; 
+}
