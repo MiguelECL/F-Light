@@ -37,14 +37,22 @@ const DetailsPage = () => {
                     {offer.segments.map((segment:Segment, index:number) => (
                         <SegmentComponent key={index} segment={segment} offer={offer} dictionaries={dictionaries} index={index}/>
                     ))}
+                    {(offer.returnSegments &&
+                    <div>
+                        <h1 style={{color: "black"}}>Return Flight</h1>
+                        {offer.returnSegments.map((segment: Segment, index: number) => (
+                            <SegmentComponent key={index} segment={segment} offer={offer} dictionaries={dictionaries} index={index} />
+                        ))}
+                    </div>
+                    )}
                 </Grid>
                 <Grid size={4}>
-                    <PriceBreakdown offer={offer}/> 
+                    <PriceBreakdown offer={offer} />
                 </Grid>
             </Grid>
-            <Button onClick={() => {navigate(-1)}}fullWidth variant="contained">Return</Button>
+            <Button onClick={() => { navigate(-1) }} fullWidth variant="contained">Return</Button>
         </Container>
     );
 }
- 
+
 export default DetailsPage;

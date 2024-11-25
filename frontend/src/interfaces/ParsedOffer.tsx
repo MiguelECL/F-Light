@@ -18,6 +18,14 @@ export default interface ParsedOffer {
     returnNumStops?: number,
     returnStopsString?: string,
     numStops: number,
+    stops: {
+        stopWhere: string,
+        stopDuration: string,
+    }[],
+    returnStops?: {
+        stopWhere: string,
+        stopDuration: string,
+    }[],
     stopsString: string,
     carrierInfo: string
     totalPrice: string,
@@ -25,6 +33,7 @@ export default interface ParsedOffer {
     fees: [{}],
     numAdults: number,
     perTravelerPrice: string,
-    fareDetailsBySegment: SegmentDetails[]
-    segments: Segment[]
+    fareDetailsBySegment: SegmentDetails[],
+    segments: Segment[],
+    returnSegments: Segment[]
 }

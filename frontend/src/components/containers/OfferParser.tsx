@@ -3,6 +3,7 @@ import FlightOffer from "../../interfaces/FlightOffer";
 import duration from "dayjs/plugin/duration"
 import ParsedOffer from "../../interfaces/ParsedOffer";
 import Dictionary from "../../interfaces/Dictionary";
+import Segment from "../../interfaces/Segment";
 
 export const OfferParser = (offer: FlightOffer, dictionaries: Dictionary) => {
     // Format time
@@ -17,8 +18,21 @@ export const OfferParser = (offer: FlightOffer, dictionaries: Dictionary) => {
 
     // Get the number of stops and their duration
     let numStops = 0;
+    let stops = [];
+    // If number of segments is greater than 1, that means that there are stops
+    if(offer.itineraries[0].segments.length > 1){
+        length = offer.itineraries[0].segments.length;
+        for (let i = 0 ; i<length-1 ; i++) {
+            let stopWhere = offer.itineraries[0].segments[i].arrival.iataCode;
+            let stopBegin = offer.itineraries[0].segments[i].arrival.at;
+            let stopEnd = offer.itineraries[0].segments[i+1].departure.at;
+            let timeDifference = dayjs(stopEnd).diff(stopBegin,'minutes') 
+            let stopDuration = dayjs.duration(timeDifference,'minutes').format("HH[h] mm[m]");
+            stops.push({stopWhere, stopDuration})
+        }
+    }
+
     let stopsString = "";
-    // let stops = [];
 
     for (let _segment of offer.itineraries[0].segments) {
         numStops++;
@@ -53,6 +67,7 @@ export const OfferParser = (offer: FlightOffer, dictionaries: Dictionary) => {
 
     // Obtain segments
     const segments = offer.itineraries[0].segments;
+
     
     //Variables for return Flight
     var returnLastSegment = 0;
@@ -66,6 +81,9 @@ export const OfferParser = (offer: FlightOffer, dictionaries: Dictionary) => {
     var returnCarrierString = "";
     var returnNumStops = 0;
     var returnStopsString = "";
+    var returnStops = [];
+    var returnSegments: Segment[] = [];
+
     // Return Flight Parsing
     if (offer.itineraries.length > 1) {
 
@@ -97,6 +115,23 @@ export const OfferParser = (offer: FlightOffer, dictionaries: Dictionary) => {
             const returnCarrierCode = offer.itineraries[1].segments[0].operating?.carrierCode;
             const returnCarrierName = dictionaries.carriers[carrierCode]
             var returnCarrierString = `${returnCarrierName} (${returnCarrierCode})`
+
+            //Retun stops
+            if (offer.itineraries[1].segments.length > 1) {
+                length = offer.itineraries[1].segments.length;
+                for (let i = 0; i < length - 1; i++) {
+                    let stopWhere = offer.itineraries[1].segments[i].arrival.iataCode;
+                    let stopBegin = offer.itineraries[1].segments[i].arrival.at;
+                    let stopEnd = offer.itineraries[1].segments[i + 1].departure.at;
+                    let timeDifference = dayjs(stopEnd).diff(stopBegin, 'minutes')
+                    let stopDuration = dayjs.duration(timeDifference, 'minutes').format("HH[h] mm[m]");
+                    returnStops.push({ stopWhere, stopDuration })
+                }
+            }
+
+            // Get Return Segments
+            returnSegments = offer.itineraries[1].segments;
+
         }
     }
 
@@ -117,6 +152,8 @@ export const OfferParser = (offer: FlightOffer, dictionaries: Dictionary) => {
         returnNumStops: returnNumStops,
         returnStopsString: returnStopsString,
         numStops: numStops,
+        stops: stops,
+        returnStops: returnStops,
         stopsString: stopsString,
         carrierInfo: carrierString,
         totalPrice: totalPrice,
@@ -125,7 +162,8 @@ export const OfferParser = (offer: FlightOffer, dictionaries: Dictionary) => {
         numAdults: numAdults,
         perTravelerPrice: perTravelerPrice,
         fareDetailsBySegment: fareDetailsBySegment,
-        segments: segments
+        segments: segments,
+        returnSegments: returnSegments,
     }
 
     return data;

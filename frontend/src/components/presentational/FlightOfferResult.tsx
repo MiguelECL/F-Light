@@ -16,6 +16,9 @@ const FlightOfferResult = ({ offer, handleClick }: { offer: ParsedOffer, handleC
                             </Box>
                             <Box id="Center">
                                 <h2>{offer.timeDuration + " " + offer.stopsString}</h2>
+                                {offer.stops.map((stop, index: number) => (
+                                    <h3 key={index}>{`${stop.stopDuration} in ${stop.stopWhere}`}</h3>
+                                ))}
                             </Box>
                         </Stack>
                         <Stack direction="row" spacing={20}>
@@ -26,6 +29,9 @@ const FlightOfferResult = ({ offer, handleClick }: { offer: ParsedOffer, handleC
                             </Box>
                             <Box id="Center">
                                 <h2>{offer.returnTimeDuration + " " + offer.returnStopsString}</h2>
+                                {offer.returnStops?.map((stop, index: number) => (
+                                    <h3 key={index}>{`${stop.stopDuration} in ${stop.stopWhere}`}</h3>
+                                ))}
                             </Box>
                         </Stack>
                     </Stack>
@@ -56,6 +62,9 @@ const FlightOfferResult = ({ offer, handleClick }: { offer: ParsedOffer, handleC
                     </Box>
                     <Box id="Center">
                         <h2>{offer.timeDuration + " " + offer.stopsString}</h2>
+                        {offer.stops.map((stop, index: number) => (
+                            <h3 key={index}>{`${stop.stopDuration} in ${stop.stopWhere}`}</h3>
+                        ))}
                     </Box>
                     <Box id="Right">
                         <h2>{offer.totalPrice}</h2>
@@ -72,7 +81,7 @@ const FlightOfferResult = ({ offer, handleClick }: { offer: ParsedOffer, handleC
             <Divider></Divider>
         </Box>
     )
-    
+
 }
 
 
