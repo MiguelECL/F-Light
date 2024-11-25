@@ -1,14 +1,15 @@
 import { Autocomplete, Button, Checkbox, Container, FormControl, FormControlLabel, Grid2 as Grid, Input, InputLabel, MenuItem, Select, SelectChangeEvent, Slider, Stack, TextField, Typography } from "@mui/material";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { DatePicker } from "@mui/x-date-pickers";
 import { ChangeEvent, SyntheticEvent, useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import utc from "dayjs/plugin/utc"
 import { useNavigate } from "react-router-dom";
 import { ACSearchResult } from "../../interfaces/ACSearchResult";
 import { handleAutocomplete } from "../containers/handleAutocomplete";
 import { useFlightSearch } from "../../Hooks/useFlightSearch";
 
 const SearchPage = () => {
+    dayjs.extend(utc); //Add UTC functionality 
     const [departureDate, setDepartureDate] = useState<Dayjs | null>(dayjs());
     const [returnDate, setReturnDate] = useState<Dayjs | null>();
     const [currency, setCurrency] = useState("USD");
@@ -49,13 +50,13 @@ const SearchPage = () => {
         if (returnDate == null){
             var returnDateString = "";
         } else {
-            var returnDateString = dayjs(returnDate).format("YYYY-MM-DD")
+            var returnDateString = dayjs(returnDate).utc().format("YYYY-MM-DD")
         }
 
         const params = {
             departureAirport: departureAirport?.iataCode,
             destinationAirport: arrivalAirport?.iataCode,
-            departureDate: dayjs(departureDate).format("YYYY-MM-DD"),
+            departureDate: dayjs(departureDate).utc().format("YYYY-MM-DD"),
             returnDate: returnDateString, 
             adults: numAdults,
             nonStop: checked,
@@ -76,7 +77,7 @@ const SearchPage = () => {
 
     return (
         <Container maxWidth="sm" sx={{ marginTop: 20 }}>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
+            
                 <form onSubmit={(e) => { handleSubmit(e) }}>
                     <Stack spacing={1}>
                         <h1> Search Flights</h1>
@@ -123,7 +124,7 @@ const SearchPage = () => {
                         </Grid>
                     </Stack>
                 </form>
-            </LocalizationProvider>
+            
         </Container>
     );
 }

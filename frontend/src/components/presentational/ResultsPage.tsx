@@ -4,7 +4,6 @@ import FlightOffer from "../../interfaces/FlightOffer";
 import FlightSearchResponse from "../../interfaces/FlightSearchResponse";
 import { OfferParser } from "../containers/OfferParser";
 import FlightOfferResult from "./FlightOfferResult";
-import OneWayFlightOfferResult from "./OneWayFlightOfferResult";
 import ParsedOffer from "../../interfaces/ParsedOffer";
 import { useEffect, useState } from "react";
 import { sampleResponse } from "../../tests/SampleResponse";
@@ -47,11 +46,7 @@ const ResultsPage = () => {
             <Stack>
                 {parsedResponse?.data.map((offer: FlightOffer, index: number) => {
                     const parsedOffer = OfferParser(offer, parsedResponse.dictionaries)
-                    if (parsedOffer.oneWay == true)
-                        return (
-                            <OneWayFlightOfferResult key={index} offer={parsedOffer} handleClick={handleClick} />
-                        )
-                    else return (
+                    return (
                         <FlightOfferResult key={index} offer={parsedOffer} handleClick={handleClick} />
                     )
                 })}
