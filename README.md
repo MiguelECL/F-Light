@@ -16,7 +16,8 @@ To run the application, you must first clone the repository to your local machin
 
 ### Modifying Root .env File
 
-In order to get the app to make API calls, you must provide it with 
+In order to get the app to make API calls, you must provide it with the appropriate environment variables, which is where you come in... 
+Open the `.env` file that is located in the root directory. And Replace the `${YOUR_API_KEY}`and `${YOUR_API_SECRET}`
 
 ### Commands
 
@@ -29,7 +30,7 @@ After you have installed Docker, in your terminal, change directory to the F-Lig
 #### Run Docker Compose
 
 The project makes use of Docker Compose to build and run both the backend and the frontend of the application, which are run in separate containers as a single multi-container application. To do so, run the following command.
-
+`docker compose config` This will make sure that docker reads in the .env file that you provided.
 `docker compose up`
 
 This process will take some minutes as Docker has to first build the appropriate images for each service from the Dockerfiles inside each respective service.
