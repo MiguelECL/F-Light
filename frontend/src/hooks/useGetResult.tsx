@@ -9,6 +9,7 @@ export async function useGetResult(
 
     const response = await fetch(searchResultURL);
     const results = await response.json();
+    console.log(results);
     setGoodRequest(true);
     setResults(results);
     // fetch(searchResultURL, {
