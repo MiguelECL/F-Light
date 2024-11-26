@@ -33,6 +33,7 @@ After you have installed Docker, in your terminal, change directory to the F-Lig
 ### Run Docker Compose
 
 The project makes use of Docker Compose to build and run both the backend and the frontend of the application, which are run in separate containers as a single multi-container application. To do so, run the following command.
+`docker compose build`
 `docker compose config` This will make sure that docker reads in the .env file that you provided.
 `docker compose --env-file .env up` To provide docker compose with the .env file.
 
