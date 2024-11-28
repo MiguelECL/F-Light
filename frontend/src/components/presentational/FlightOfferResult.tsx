@@ -6,13 +6,13 @@ const FlightOfferResult = ({ offer, handleClick }: { offer: ParsedOffer, handleC
     if(offer.returnArrivalAirport)return (
         <Box >
             <Button fullWidth onClick={() => { handleClick(offer) }}>
-                <Stack direction="row" spacing={20}>
+                <Stack direction="row" spacing={10}>
                     <Stack>
-                        <Stack direction="row" spacing={20}>
+                        <Stack direction="row" spacing={10}>
                             <Box id="Left">
                                 <h2>{offer.departureLocalTime + " - " + offer.arrivalLocalTime}</h2>
                                 <h3>{`${offer.departureAirport + " - " + offer.arrivalAirport}`}</h3>
-                                <h3>{offer.carrierInfo}</h3>
+                                {(offer.carrierInfo != "") && <h3>{offer?.carrierInfo}</h3>}
                             </Box>
                             <Box id="Center">
                                 <h2>{offer.timeDuration + " " + offer.stopsString}</h2>
@@ -21,11 +21,11 @@ const FlightOfferResult = ({ offer, handleClick }: { offer: ParsedOffer, handleC
                                 ))}
                             </Box>
                         </Stack>
-                        <Stack direction="row" spacing={20}>
+                        <Stack direction="row" spacing={10}>
                             <Box id="Left">
                                 <h2>{offer.returnDepartureLocalTime + " - " + offer.returnArrivalLocalTime}</h2>
                                 <h3>{`${offer.returnDepartureAirport + " - " + offer.returnArrivalAirport}`}</h3>
-                                <h3>{offer.returnCarrierInfo}</h3>
+                                {(offer.returnCarrierInfo != "") && <h3>{offer?.returnCarrierInfo}</h3>}
                             </Box>
                             <Box id="Center">
                                 <h2>{offer.returnTimeDuration + " " + offer.returnStopsString}</h2>
@@ -35,7 +35,6 @@ const FlightOfferResult = ({ offer, handleClick }: { offer: ParsedOffer, handleC
                             </Box>
                         </Stack>
                     </Stack>
-                    <Divider orientation="vertical"></Divider>
                     <Stack>
                         <h2>{offer.totalPrice}</h2>
                         <h3>{"Total"}</h3>

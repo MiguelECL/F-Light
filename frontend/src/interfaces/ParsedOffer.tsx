@@ -30,7 +30,7 @@ export default interface ParsedOffer {
     carrierInfo: string
     totalPrice: string,
     basePrice: string,
-    fees: [{}],
+    fees: {}[],
     numAdults: number,
     perTravelerPrice: string,
     fareDetailsBySegment: SegmentDetails[],

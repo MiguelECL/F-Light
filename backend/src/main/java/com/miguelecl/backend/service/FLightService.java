@@ -78,6 +78,7 @@ public class FLightService {
     public String searchFlights(String AuthToken, SearchParams searchParams){
         
         String finalURL = getFinalURL(searchParams);
+        System.out.println(AuthToken);
         return webClient
                 .get()
                 .uri(flightSearchURL + finalURL)

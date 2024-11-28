@@ -24,21 +24,19 @@ const ResultsPage = () => {
 
 
     useEffect(() => {
+        setParsedResponse(undefined);
         const fetchData = async () => {
             await useGetResult(setParsedResponse, setGoodRequest);
-            if (goodRequest == true) {
-                setLoading(false);
-                console.log(goodRequest)
-            } else {
+            setLoading(false);
+            console.log(goodRequest)
+            if (goodRequest == false) {
                 setParsedResponse(JSON.parse(sampleResponse));
                 setLoading(false);
-                console.log("F");
-            }
+            } 
         }
         fetchData();
     },[goodRequest])
 
-    
 
     const handleClick = (parsedOffer: ParsedOffer) => {
         const dicts = parsedResponse?.dictionaries

@@ -63,8 +63,11 @@ const SearchPage = () => {
             currencyCode: currency
         };
 
-        useFlightSearch(params);
-        navigate("/results", {state: params});
+        const fetchData = async () => {
+            await useFlightSearch(params);
+            navigate("/results", { state: params });
+        }
+        fetchData();
     }
 
 

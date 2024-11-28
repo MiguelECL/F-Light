@@ -13,12 +13,12 @@ export default interface FlightOffer {
         currency: string, 
         total: string,
         base: string,
-        fees: [
+        fees: 
             {
                 amount: string,
                 type: string
-            }
-        ]
+            }[]
+        
         grandTotal: string,
         pricingOptions: {
             fareType: string[],

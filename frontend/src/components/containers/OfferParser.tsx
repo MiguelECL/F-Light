@@ -58,7 +58,7 @@ export const OfferParser = (offer: FlightOffer, dictionaries: Dictionary) => {
     const perTravelerPrice = offer.travelerPricings[0].price.total + " " + currency;
     const fareDetailsBySegment = offer.travelerPricings[0].fareDetailsBySegment;
     const basePrice = offer.price.base;
-    const fees = offer.price.fees;
+    var fees = offer.price.fees;
 
     // Obtain operating airline
     const carrierCode = offer.itineraries[0].segments[0].operating?.carrierCode;
@@ -119,8 +119,11 @@ export const OfferParser = (offer: FlightOffer, dictionaries: Dictionary) => {
             // Obtain operating airline
             const returnCarrierCode = offer.itineraries[1].segments[0].operating?.carrierCode;
             const returnCarrierName = dictionaries.carriers[carrierCode]
-            var returnCarrierString = `${returnCarrierName} (${returnCarrierCode})`
-
+            if (returnCarrierCode == undefined || returnCarrierName == undefined) {
+                var returnCarrierString = "No Carrier Info";
+            } else {
+                var returnCarrierString = `${carrierName} (${carrierCode})`
+    }
             //Retun stops
             if (offer.itineraries[1].segments.length > 1) {
                 length = offer.itineraries[1].segments.length;
